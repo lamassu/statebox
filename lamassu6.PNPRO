@@ -490,13 +490,13 @@
       </arc>
     </edges>
   </gspn>
-  <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+  <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
       <place marking="1" name="ScanPhoneScreen" x="3.0" y="43.0"/>
       <transition name="scanTimeout" nservers-x="0.5" type="EXP" x="3.55" y="39.0"/>
       <transition name="addrScanned" nservers-x="0.5" type="EXP" x="8.55" y="43.0"/>
       <place label-x="-3.0" name="InsertFirstBill" x="23.0" y="35.0"/>
-      <transition name="waitBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="16.55" y="33.0"/>
+      <transition name="waitBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="13.55" y="35.0"/>
       <transition name="stacked" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="46.55" y="24.0"/>
       <transition name="sendCoins" nservers-x="0.5" superposition-tags="user" type="EXP" x="72.55" y="24.0"/>
       <place name="SendingCoins" x="96.0" y="24.0"/>
@@ -536,13 +536,13 @@
       <transition name="runAmlKyc2" nservers-x="0.5" type="EXP" x="35.55" y="38.0"/>
       <place name="AmlKyc2" x="43.0" y="37.0"/>
       <transition name="acceptAmlKyc2" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="48.55" y="34.0"/>
-      <transition name="rejectAmlKyc2" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="43.55" y="30.0"/>
+      <transition name="rejectAmlKyc2" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="40.55" y="32.0"/>
       <place name="CheckAmlKyc2" x="39.0" y="44.0"/>
       <transition name="stacked2" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="72.55" y="29.0"/>
       <place name="Stacking2" x="79.0" y="30.0"/>
       <place name="JamInform" x="64.0" y="13.0"/>
       <transition name="jamSendCoins" nservers-x="0.5" superposition-tags="timeout" type="EXP" x="72.55" y="13.0"/>
-      <place name="NoAmlKycInform" x="43.0" y="6.0"/>
+      <place name="InformNoAmlKyc" x="43.0" y="6.0"/>
       <transition name="amlKycSendCoins" nservers-x="0.5" type="EXP" x="72.55" y="6.0"/>
     </nodes>
     <edges>
@@ -611,8 +611,8 @@
       <arc head="JamInform" kind="OUTPUT" tail="jam2"/>
       <arc head="jamSendCoins" kind="INPUT" tail="JamInform"/>
       <arc head="SendingCoins" kind="OUTPUT" tail="jamSendCoins"/>
-      <arc head="NoAmlKycInform" kind="OUTPUT" tail="rejectAmlKyc2"/>
-      <arc head="amlKycSendCoins" kind="INPUT" tail="NoAmlKycInform"/>
+      <arc broken="true" head="InformNoAmlKyc" kind="OUTPUT" tail="rejectAmlKyc2"/>
+      <arc head="amlKycSendCoins" kind="INPUT" tail="InformNoAmlKyc"/>
       <arc head="SendingCoins" kind="OUTPUT" tail="amlKycSendCoins"/>
     </edges>
   </gspn>
