@@ -490,7 +490,7 @@
       </arc>
     </edges>
   </gspn>
-  <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
+  <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="50">
     <nodes>
       <place marking="1" name="ScanPhoneScreen" x="3.0" y="72.0"/>
       <transition name="scanTimeout" nservers-x="0.5" type="EXP" x="9.55" y="72.0"/>
@@ -560,8 +560,6 @@
       <place name="rejectComplete" x="12.0" y="51.0"/>
       <place name="EscrowRejected" x="26.0" y="56.0"/>
       <place name="ChooseDenyReason" x="12.0" y="23.0"/>
-      <place name="EscrowRejectCompleted" x="34.0" y="64.0"/>
-      <transition name="backToFirstBill" nservers-x="0.5" superposition-tags="auto" type="EXP" x="32.55" y="71.0"/>
     </nodes>
     <edges>
       <arc head="scanTimeout" kind="INPUT" tail="ScanPhoneScreen"/>
@@ -657,11 +655,7 @@
       <arc head="completeEscrowReject" kind="INPUT" tail="rejectComplete"/>
       <arc head="completeEscrowReject" kind="INPUT" tail="EscrowRejected"/>
       <arc head="EscrowDenying" kind="OUTPUT" tail="escrowDeny"/>
-      <arc head="EscrowRejectCompleted" kind="OUTPUT" mult="2" tail="completeEscrowReject"/>
-      <arc head="backToFirstBill" kind="INPUT" mult="2" mult-k="1.1139648437500003" tail="EscrowRejectCompleted">
-        <point x="34.1099609375" y="68.11513671875"/>
-      </arc>
-      <arc head="InsertFirstBill" kind="OUTPUT" tail="backToFirstBill"/>
+      <arc head="InsertFirstBill" kind="OUTPUT" tail="completeEscrowReject"/>
     </edges>
   </gspn>
   <gspn name="Attic" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
