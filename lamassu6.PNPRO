@@ -490,6 +490,120 @@
       </arc>
     </edges>
   </gspn>
+  <gspn name="AmlKyc" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place marking="1" name="Start" x="5.0" y="15.0"/>
+      <transition name="noAmlKycBegin" nservers-x="0.5" superposition-tags="machine" type="EXP" x="5.55" y="9.0"/>
+      <transition name="rejectAmlKycBegin" nservers-x="0.5" superposition-tags="user" type="EXP" x="5.55" y="22.0"/>
+      <transition name="continue" nservers-x="0.5" superposition-tags="user" type="EXP" x="12.55" y="15.0"/>
+      <place name="determineTier" x="18.0" y="15.0"/>
+      <transition name="runAmlKycTier" nservers-x="0.5" type="EXP" x="24.55" y="15.0"/>
+      <place name="AmlKycTier" x="30.0" y="15.0"/>
+      <transition name="rejectAmlKycTier" nservers-x="0.5" type="EXP" x="30.55" y="22.0"/>
+      <transition name="completeAmlKycTier" nservers-x="0.5" type="EXP" x="30.55" y="9.0"/>
+      <transition name="noAmlKyc" nservers-x="0.5" type="EXP" x="12.55" y="4.0"/>
+      <transition name="noAmlKycTier" nservers-x="0.5" type="EXP" x="18.55" y="9.0"/>
+      <place name="NoAmlKyc" x="12.0" y="9.0"/>
+      <transition name="rejectAmlKyc" nservers-x="0.5" type="EXP" x="14.55" y="30.0"/>
+      <place name="RejectAmlKyc" x="14.0" y="22.0"/>
+    </nodes>
+    <edges>
+      <arc head="rejectAmlKycBegin" kind="INPUT" tail="Start"/>
+      <arc head="noAmlKycBegin" kind="INPUT" tail="Start"/>
+      <arc head="continue" kind="INPUT" tail="Start"/>
+      <arc head="determineTier" kind="OUTPUT" tail="continue"/>
+      <arc head="runAmlKycTier" kind="INPUT" tail="determineTier"/>
+      <arc head="AmlKycTier" kind="OUTPUT" tail="runAmlKycTier"/>
+      <arc head="rejectAmlKycTier" kind="INPUT" tail="AmlKycTier"/>
+      <arc head="completeAmlKycTier" kind="INPUT" tail="AmlKycTier"/>
+      <arc head="determineTier" kind="OUTPUT" tail="completeAmlKycTier"/>
+      <arc head="noAmlKycTier" kind="INPUT" tail="determineTier"/>
+      <arc head="NoAmlKyc" kind="OUTPUT" tail="noAmlKycBegin"/>
+      <arc head="NoAmlKyc" kind="OUTPUT" tail="noAmlKycTier"/>
+      <arc head="noAmlKyc" kind="INPUT" tail="NoAmlKyc"/>
+      <arc head="RejectAmlKyc" kind="OUTPUT" tail="rejectAmlKycBegin"/>
+      <arc head="RejectAmlKyc" kind="OUTPUT" tail="rejectAmlKycTier"/>
+      <arc head="rejectAmlKyc" kind="INPUT" tail="RejectAmlKyc"/>
+    </edges>
+  </gspn>
+  <gspn name="AmlKycTierSms" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place marking="1" name="Start" x="12.0" y="28.0"/>
+      <transition name="reject" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="35.0"/>
+      <transition name="inputPhone" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="28.0"/>
+      <place name="havePhone" x="25.0" y="28.0"/>
+      <transition name="sendSms" nservers-x="0.5" superposition-tags="server" type="EXP" x="31.55" y="28.0"/>
+      <place name="AskForCode" x="37.0" y="28.0"/>
+      <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="46.55" y="28.0"/>
+      <place name="CheckCode" x="54.0" y="28.0"/>
+      <transition name="goodCode" nservers-x="0.5" type="EXP" x="64.55" y="28.0"/>
+      <transition name="badCode" nservers-x="0.5" type="EXP" x="54.55" y="41.0"/>
+      <transition name="badPhoneNumber" nservers-x="0.5" type="EXP" x="44.55" y="35.0"/>
+      <transition name="smsTimeout" nservers-x="0.5" type="EXP" x="34.55" y="35.0"/>
+      <place name="Abort" x="34.0" y="52.0"/>
+      <transition name="amlKycTierAbort" nservers-x="0.5" type="EXP" x="34.55" y="58.0"/>
+      <place name="CheckCode2" x="62.0" y="52.0"/>
+      <place name="TryAgain" x="47.0" y="41.0"/>
+      <transition name="noTryAgain" nservers-x="0.5" type="EXP" x="38.55" y="46.0"/>
+      <transition name="yesTryAgain" nservers-x="0.5" type="EXP" x="54.55" y="46.0"/>
+      <transition name="timeout" nservers-x="0.5" type="EXP" x="37.55" y="13.0"/>
+      <place name="didReceiveCode" x="25.0" y="13.0"/>
+      <transition name="receivedCode" nservers-x="0.5" type="EXP" x="25.55" y="21.0"/>
+      <transition name="didNotReceiveCode" nservers-x="0.5" type="EXP" x="5.55" y="28.0"/>
+      <transition name="badCode2" nservers-x="0.5" type="EXP" x="62.55" y="58.0"/>
+      <place name="TryAgain2" x="62.0" y="63.0"/>
+      <transition name="yesTryAgain2" nservers-x="0.5" type="EXP" x="62.55" y="70.0"/>
+      <transition name="noTryAgain2" nservers-x="0.5" type="EXP" x="53.55" y="63.0"/>
+      <place name="CheckCode3" x="69.0" y="70.0"/>
+      <transition name="badCode3" nservers-x="0.5" type="EXP" x="62.55" y="76.0"/>
+      <place name="InformAbort" x="62.0" y="81.0"/>
+      <transition name="TooManyTries" nservers-x="0.5" type="EXP" x="53.55" y="81.0"/>
+      <place name="Complete" x="68.0" y="28.0"/>
+      <transition name="amlKycTierComplete" nservers-x="0.5" type="EXP" x="73.55" y="28.0"/>
+    </nodes>
+    <edges>
+      <arc head="inputPhone" kind="INPUT" tail="Start"/>
+      <arc head="reject" kind="INPUT" tail="Start"/>
+      <arc head="havePhone" kind="OUTPUT" tail="inputPhone"/>
+      <arc head="badPhoneNumber" kind="INPUT" tail="AskForCode"/>
+      <arc head="sendSms" kind="INPUT" tail="havePhone"/>
+      <arc head="AskForCode" kind="OUTPUT" tail="sendSms"/>
+      <arc head="inputCode" kind="INPUT" tail="AskForCode"/>
+      <arc head="CheckCode" kind="OUTPUT" tail="inputCode"/>
+      <arc head="goodCode" kind="INPUT" tail="CheckCode"/>
+      <arc head="badCode" kind="INPUT" tail="CheckCode"/>
+      <arc head="smsTimeout" kind="INPUT" tail="AskForCode"/>
+      <arc head="amlKycTierAbort" kind="INPUT" tail="Abort"/>
+      <arc head="Abort" kind="OUTPUT" tail="smsTimeout"/>
+      <arc head="TryAgain" kind="OUTPUT" tail="badPhoneNumber"/>
+      <arc head="noTryAgain" kind="INPUT" tail="TryAgain"/>
+      <arc head="Abort" kind="OUTPUT" tail="noTryAgain"/>
+      <arc head="yesTryAgain" kind="INPUT" tail="TryAgain"/>
+      <arc head="CheckCode2" kind="OUTPUT" tail="yesTryAgain"/>
+      <arc head="TryAgain" kind="OUTPUT" tail="badCode"/>
+      <arc head="Abort" kind="OUTPUT" tail="reject"/>
+      <arc head="timeout" kind="INPUT" tail="AskForCode"/>
+      <arc head="didReceiveCode" kind="OUTPUT" tail="timeout"/>
+      <arc head="receivedCode" kind="INPUT" tail="didReceiveCode"/>
+      <arc head="didNotReceiveCode" kind="INPUT" tail="didReceiveCode"/>
+      <arc head="AskForCode" kind="OUTPUT" tail="receivedCode"/>
+      <arc head="Abort" kind="OUTPUT" tail="didNotReceiveCode"/>
+      <arc head="badCode2" kind="INPUT" tail="CheckCode2"/>
+      <arc head="TryAgain2" kind="OUTPUT" tail="badCode2"/>
+      <arc head="yesTryAgain2" kind="INPUT" tail="TryAgain2"/>
+      <arc head="goodCode" kind="INPUT" tail="CheckCode2"/>
+      <arc head="noTryAgain2" kind="INPUT" tail="TryAgain2"/>
+      <arc head="Abort" kind="OUTPUT" tail="noTryAgain2"/>
+      <arc head="badCode3" kind="INPUT" tail="CheckCode3"/>
+      <arc head="InformAbort" kind="OUTPUT" tail="badCode3"/>
+      <arc head="CheckCode3" kind="OUTPUT" tail="yesTryAgain2"/>
+      <arc head="TooManyTries" kind="INPUT" tail="InformAbort"/>
+      <arc head="Abort" kind="OUTPUT" tail="TooManyTries"/>
+      <arc head="goodCode" kind="INPUT" tail="CheckCode3"/>
+      <arc head="Complete" kind="OUTPUT" tail="goodCode"/>
+      <arc head="amlKycTierComplete" kind="INPUT" tail="Complete"/>
+    </edges>
+  </gspn>
   <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="50">
     <nodes>
       <place marking="1" name="ScanPhoneScreen" x="31.0" y="51.0"/>
@@ -518,7 +632,7 @@
       <place name="ReadyForFirstBill" x="76.0" y="51.0"/>
       <transition name="runCashInFirstBill" nservers-x="0.5" type="EXP" x="83.55" y="51.0"/>
       <place name="firstBill" x="92.0" y="51.0"/>
-      <transition name="stacked" nservers-x="0.5" superposition-tags="CashInFirstBill" type="EXP" x="98.55" y="51.0"/>
+      <transition name="stacked" nservers-x="0.5" superposition-tags="CashInFirstBill" type="EXP" x="100.55" y="51.0"/>
       <place name="readyForAdditionalBills" x="108.0" y="51.0"/>
       <transition name="runCashInAdditionalBills" nservers-x="0.5" type="EXP" x="118.55" y="51.0"/>
       <place name="additionalBills" x="128.0" y="51.0"/>
@@ -526,7 +640,7 @@
       <transition name="sendCoins" nservers-x="0.5" superposition-tags="CashInAdditionalBills" type="EXP" x="137.55" y="51.0"/>
       <transition name="waitBillTimeout2" nservers-x="0.5" superposition-tags="CashInAdditionalBills" type="EXP" x="137.55" y="41.0"/>
       <transition label-x="2.0" label-y="-2.0" name="rejected2" nservers-x="0.5" superposition-tags="CashInAdditionalBills" type="EXP" x="120.55" y="58.0"/>
-      <transition name="jam2" nservers-x="0.5" superposition-tags="CashInAdditionalBills" type="EXP" x="135.55" y="80.0"/>
+      <transition name="jam2" nservers-x="0.5" superposition-tags="CashInAdditionalBills" type="EXP" x="128.55" y="80.0"/>
       <transition name="completeEscrowReject2" nservers-x="0.5" superposition-tags="CashInAdditionalBills" type="EXP" x="120.55" y="65.0"/>
       <transition name="waitBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="92.55" y="72.0"/>
       <transition label-x="2.0" label-y="-2.0" name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="85.55" y="38.0"/>
@@ -660,7 +774,7 @@
     <nodes>
       <place label-x="-0.5" label-y="2.5" marking="1" name="Start" x="31.0" y="20.0"/>
       <transition name="waitBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="20.55" y="10.0"/>
-      <transition name="stacked" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="74.55" y="20.0"/>
+      <transition label-x="-0.5" label-y="-1.0" name="stacked" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="66.55" y="11.0"/>
       <transition label-x="2.0" label-y="-2.0" name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="27.55" y="10.0"/>
       <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="34.55" y="10.0"/>
       <transition name="readBill" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="41.55" y="20.0"/>
