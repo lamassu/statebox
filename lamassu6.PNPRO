@@ -526,40 +526,47 @@
       <arc head="rejectAmlKyc" kind="INPUT" tail="RejectAmlKyc"/>
     </edges>
   </gspn>
-  <gspn name="AmlKycTierSms" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+  <gspn name="AmlKycTierSms" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place marking="1" name="Start" x="12.0" y="28.0"/>
-      <transition name="reject" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="35.0"/>
-      <transition name="inputPhone" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="28.0"/>
-      <place name="havePhone" x="25.0" y="28.0"/>
-      <transition name="sendSms" nservers-x="0.5" superposition-tags="server" type="EXP" x="31.55" y="28.0"/>
-      <place name="AskForCode" x="37.0" y="28.0"/>
-      <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="46.55" y="28.0"/>
-      <place name="CheckCode" x="54.0" y="28.0"/>
-      <transition name="goodCode" nservers-x="0.5" type="EXP" x="64.55" y="28.0"/>
-      <transition name="badCode" nservers-x="0.5" type="EXP" x="54.55" y="41.0"/>
-      <transition name="badPhoneNumber" nservers-x="0.5" type="EXP" x="44.55" y="35.0"/>
-      <transition name="smsTimeout" nservers-x="0.5" type="EXP" x="34.55" y="35.0"/>
-      <place name="Abort" x="34.0" y="52.0"/>
-      <transition name="amlKycTierAbort" nservers-x="0.5" type="EXP" x="34.55" y="58.0"/>
-      <place name="CheckCode2" x="62.0" y="52.0"/>
-      <place name="TryAgain" x="47.0" y="41.0"/>
-      <transition name="noTryAgain" nservers-x="0.5" type="EXP" x="38.55" y="46.0"/>
-      <transition name="yesTryAgain" nservers-x="0.5" type="EXP" x="54.55" y="46.0"/>
-      <transition name="timeout" nservers-x="0.5" type="EXP" x="37.55" y="13.0"/>
-      <place name="didReceiveCode" x="25.0" y="13.0"/>
-      <transition name="receivedCode" nservers-x="0.5" type="EXP" x="25.55" y="21.0"/>
-      <transition name="didNotReceiveCode" nservers-x="0.5" type="EXP" x="5.55" y="28.0"/>
-      <transition name="badCode2" nservers-x="0.5" type="EXP" x="62.55" y="58.0"/>
-      <place name="TryAgain2" x="62.0" y="63.0"/>
-      <transition name="yesTryAgain2" nservers-x="0.5" type="EXP" x="62.55" y="70.0"/>
-      <transition name="noTryAgain2" nservers-x="0.5" type="EXP" x="53.55" y="63.0"/>
-      <place name="CheckCode3" x="69.0" y="70.0"/>
-      <transition name="badCode3" nservers-x="0.5" type="EXP" x="62.55" y="76.0"/>
-      <place name="InformAbort" x="62.0" y="81.0"/>
-      <transition name="TooManyTries" nservers-x="0.5" type="EXP" x="53.55" y="81.0"/>
-      <place name="Complete" x="68.0" y="28.0"/>
-      <transition name="amlKycTierComplete" nservers-x="0.5" type="EXP" x="73.55" y="28.0"/>
+      <place marking="1" name="Start" x="14.0" y="30.0"/>
+      <transition name="reject" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="42.0"/>
+      <transition name="inputPhone" nservers-x="0.5" superposition-tags="user" type="EXP" x="20.55" y="30.0"/>
+      <place name="havePhone" x="27.0" y="30.0"/>
+      <transition name="sendSms" nservers-x="0.5" superposition-tags="machine" type="EXP" x="33.55" y="30.0"/>
+      <place name="AskForCode" x="39.0" y="30.0"/>
+      <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="47.55" y="24.0"/>
+      <place name="CheckCode" x="67.0" y="30.0"/>
+      <transition name="goodCode" nservers-x="0.5" type="EXP" x="79.55" y="30.0"/>
+      <transition name="badCode" nservers-x="0.5" type="EXP" x="56.55" y="37.0"/>
+      <transition name="badPhoneNumber" nservers-x="0.5" type="EXP" x="44.55" y="37.0"/>
+      <place name="Abort" x="20.0" y="59.0"/>
+      <transition name="amlKycTierAbort" nservers-x="0.5" type="EXP" x="20.55" y="68.0"/>
+      <place name="CheckCode2" x="64.0" y="43.0"/>
+      <place name="TryAgain" x="51.0" y="37.0"/>
+      <transition name="noTryAgain" nservers-x="0.5" type="EXP" x="48.55" y="43.0"/>
+      <transition name="yesTryAgain" nservers-x="0.5" type="EXP" x="56.55" y="43.0"/>
+      <transition name="timeout" nservers-x="0.5" type="EXP" x="34.55" y="34.0"/>
+      <place name="didReceiveCode" x="27.0" y="36.0"/>
+      <transition name="receivedCode" nservers-x="0.5" type="EXP" x="36.55" y="40.0"/>
+      <transition name="didNotReceiveCode" nservers-x="0.5" type="EXP" x="27.55" y="45.0"/>
+      <transition name="badCode2" nservers-x="0.5" type="EXP" x="68.55" y="49.0"/>
+      <place name="TryAgain2" x="68.0" y="54.0"/>
+      <transition name="yesTryAgain2" nservers-x="0.5" type="EXP" x="68.55" y="61.0"/>
+      <transition name="noTryAgain2" nservers-x="0.5" type="EXP" x="59.55" y="54.0"/>
+      <place name="CheckCode3" x="77.0" y="61.0"/>
+      <transition name="badCode3" nservers-x="0.5" type="EXP" x="68.55" y="67.0"/>
+      <place name="InformAbort" x="68.0" y="72.0"/>
+      <transition name="TooManyTries" nservers-x="0.5" type="EXP" x="59.55" y="72.0"/>
+      <place name="Complete" x="83.0" y="30.0"/>
+      <transition name="amlKycTierComplete" nservers-x="0.5" type="EXP" x="88.55" y="30.0"/>
+      <transition name="startTimeout" nservers-x="0.5" superposition-tags="timeout,user" type="EXP" x="25.55" y="42.0"/>
+      <transition name="receiveCode" nservers-x="0.5" superposition-tags="server" type="EXP" x="47.55" y="17.0"/>
+      <place name="haveServerCode" x="56.0" y="17.0"/>
+      <transition name="aggregateCodes" nservers-x="0.5" type="EXP" x="67.55" y="20.0"/>
+      <place name="haveUserCode" x="56.0" y="24.0"/>
+      <place name="WaitForCode" x="39.0" y="19.0"/>
+      <transition name="receiveCodeTimeout" nservers-x="0.5" superposition-tags="timeout" type="EXP" x="39.55" y="10.0"/>
+      <transition name="receiveCodeError" nservers-x="0.5" superposition-tags="server" type="EXP" x="27.55" y="10.0"/>
     </nodes>
     <edges>
       <arc head="inputPhone" kind="INPUT" tail="Start"/>
@@ -569,12 +576,9 @@
       <arc head="sendSms" kind="INPUT" tail="havePhone"/>
       <arc head="AskForCode" kind="OUTPUT" tail="sendSms"/>
       <arc head="inputCode" kind="INPUT" tail="AskForCode"/>
-      <arc head="CheckCode" kind="OUTPUT" tail="inputCode"/>
       <arc head="goodCode" kind="INPUT" tail="CheckCode"/>
       <arc head="badCode" kind="INPUT" tail="CheckCode"/>
-      <arc head="smsTimeout" kind="INPUT" tail="AskForCode"/>
       <arc head="amlKycTierAbort" kind="INPUT" tail="Abort"/>
-      <arc head="Abort" kind="OUTPUT" tail="smsTimeout"/>
       <arc head="TryAgain" kind="OUTPUT" tail="badPhoneNumber"/>
       <arc head="noTryAgain" kind="INPUT" tail="TryAgain"/>
       <arc head="Abort" kind="OUTPUT" tail="noTryAgain"/>
@@ -591,7 +595,6 @@
       <arc head="badCode2" kind="INPUT" tail="CheckCode2"/>
       <arc head="TryAgain2" kind="OUTPUT" tail="badCode2"/>
       <arc head="yesTryAgain2" kind="INPUT" tail="TryAgain2"/>
-      <arc head="goodCode" kind="INPUT" tail="CheckCode2"/>
       <arc head="noTryAgain2" kind="INPUT" tail="TryAgain2"/>
       <arc head="Abort" kind="OUTPUT" tail="noTryAgain2"/>
       <arc head="badCode3" kind="INPUT" tail="CheckCode3"/>
@@ -599,9 +602,21 @@
       <arc head="CheckCode3" kind="OUTPUT" tail="yesTryAgain2"/>
       <arc head="TooManyTries" kind="INPUT" tail="InformAbort"/>
       <arc head="Abort" kind="OUTPUT" tail="TooManyTries"/>
-      <arc head="goodCode" kind="INPUT" tail="CheckCode3"/>
       <arc head="Complete" kind="OUTPUT" tail="goodCode"/>
       <arc head="amlKycTierComplete" kind="INPUT" tail="Complete"/>
+      <arc head="startTimeout" kind="INPUT" tail="Start"/>
+      <arc head="Abort" kind="OUTPUT" tail="startTimeout"/>
+      <arc head="haveServerCode" kind="OUTPUT" tail="receiveCode"/>
+      <arc head="haveUserCode" kind="OUTPUT" tail="inputCode"/>
+      <arc head="aggregateCodes" kind="INPUT" tail="haveServerCode"/>
+      <arc head="aggregateCodes" kind="INPUT" tail="haveUserCode"/>
+      <arc head="CheckCode" kind="OUTPUT" tail="aggregateCodes"/>
+      <arc head="WaitForCode" kind="OUTPUT" tail="sendSms"/>
+      <arc head="receiveCode" kind="INPUT" tail="WaitForCode"/>
+      <arc head="receiveCodeTimeout" kind="INPUT" tail="WaitForCode"/>
+      <arc head="receiveCodeError" kind="INPUT" tail="WaitForCode"/>
+      <arc broken="true" head="Abort" kind="OUTPUT" tail="receiveCodeError"/>
+      <arc broken="true" head="Abort" kind="OUTPUT" tail="receiveCodeTimeout"/>
     </edges>
   </gspn>
   <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="50">
