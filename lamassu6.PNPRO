@@ -559,7 +559,7 @@
       <transition name="amlKycTierRestart" nservers-x="0.5" type="EXP" x="42.55" y="20.0"/>
       <place name="Restart" x="43.0" y="25.0"/>
       <transition name="badPhoneNumber2" nservers-x="0.5" superposition-tags="AmlKycTierSmsHasPhone" type="EXP" x="55.55" y="30.0"/>
-      <transition name="badPhoneNumber3" nservers-x="0.5" superposition-tags="AmlKycTierSmsHasPhone" type="EXP" x="55.55" y="14.0"/>
+      <transition name="badPhoneNumber3" nservers-x="0.5" superposition-tags="AmlKycTierSmsHasPhone" type="EXP" x="54.55" y="13.0"/>
     </nodes>
     <edges>
       <arc head="inputPhone" kind="INPUT" tail="Start"/>
@@ -1035,6 +1035,8 @@
       <transition name="escrowRejected" nservers-x="0.5" superposition-tags="validator" type="EXP" x="61.55" y="14.0"/>
       <transition name="runValidatorBill" nservers-x="0.5" superposition-tags="ValidatorDevice" type="EXP" x="4.55" y="8.0"/>
       <place marking="1" name="Start" x="4.0" y="14.0"/>
+      <place name="ReadBill" x="32.0" y="3.0"/>
+      <place name="Stacked" x="55.0" y="4.0"/>
     </nodes>
     <edges>
       <arc head="ReadingBill" kind="OUTPUT" tail="readingBill"/>
@@ -1059,34 +1061,39 @@
       <arc head="escrowRejected" kind="INPUT" tail="EscrowRejecting"/>
       <arc head="ReadyForBill" kind="OUTPUT" tail="runValidatorBill"/>
       <arc head="runValidatorBill" kind="INPUT" tail="Start"/>
+      <arc head="ReadBill" kind="OUTPUT" tail="readBill"/>
+      <arc head="Stacked" kind="OUTPUT" tail="stacked"/>
     </edges>
   </gspn>
   <gspn name="ValidatorDevice" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="PowerOn" x="1.0" y="14.0"/>
-      <transition name="initialize" nservers-x="0.5" superposition-tags="machine" type="EXP" x="5.55" y="14.0"/>
-      <place name="Initializing" x="10.0" y="14.0"/>
-      <transition name="initialized" nservers-x="0.5" superposition-tags="validator" type="EXP" x="16.55" y="14.0"/>
-      <place name="Idle" x="20.0" y="14.0"/>
-      <transition name="runValidatorBill" nservers-x="0.5" type="EXP" x="45.55" y="14.0"/>
-      <place name="ValidatingBill" x="52.0" y="14.0"/>
-      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="50.55" y="32.0"/>
-      <transition name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="45.55" y="8.0"/>
-      <transition name="error" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="57.55" y="37.0"/>
-      <transition name="waitBillTimeout" nservers-x="0.5" rotation="6.283185307179586" superposition-tags="ValidatorBill" type="EXP" x="35.55" y="3.0"/>
-      <transition name="stacked" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="45.55" y="20.0"/>
-      <transition name="escrowRejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="45.55" y="26.0"/>
-      <transition name="jam2" nservers-x="0.5" superposition-tags="validator" type="EXP" x="16.55" y="27.0"/>
-      <place name="Jam" x="28.0" y="32.0"/>
-      <place name="ReadyForBill" x="38.0" y="14.0"/>
-      <transition name="senseBill" nservers-x="0.5" superposition-tags="auto" type="EXP" x="33.55" y="14.0"/>
-      <transition name="startSession" nservers-x="0.5" superposition-tags="machine" type="EXP" x="24.55" y="14.0"/>
-      <place name="waitReady" x="29.0" y="14.0"/>
-      <transition name="endSession" nservers-x="0.5" superposition-tags="machine" type="EXP" x="35.55" y="8.0"/>
-      <transition name="noSenseBill" nservers-x="0.5" superposition-tags="auto" type="EXP" x="24.55" y="8.0"/>
-      <place name="waitIdle" x="29.0" y="8.0"/>
-      <transition name="initialize2" nservers-x="0.5" superposition-tags="machine" type="EXP" x="6.55" y="37.0"/>
-      <place name="ErrorReset" x="28.0" y="37.0"/>
+      <place marking="1" name="PowerOn" x="2.0" y="31.0"/>
+      <transition name="initialize" nservers-x="0.5" superposition-tags="machine" type="EXP" x="6.55" y="31.0"/>
+      <place name="Initializing" x="11.0" y="31.0"/>
+      <transition name="initialized" nservers-x="0.5" superposition-tags="validator" type="EXP" x="17.55" y="31.0"/>
+      <place name="Idle" x="21.0" y="31.0"/>
+      <transition name="runValidatorBill" nservers-x="0.5" type="EXP" x="46.55" y="31.0"/>
+      <place name="ValidatingBill" x="53.0" y="31.0"/>
+      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="51.55" y="49.0"/>
+      <transition name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="46.55" y="25.0"/>
+      <transition name="error" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="58.55" y="54.0"/>
+      <transition name="waitBillTimeout" nservers-x="0.5" rotation="6.283185307179586" superposition-tags="ValidatorBill" type="EXP" x="36.55" y="20.0"/>
+      <transition name="stacked" nservers-x="0.5" type="EXP" x="46.55" y="37.0"/>
+      <transition name="escrowRejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="46.55" y="43.0"/>
+      <transition name="jam2" nservers-x="0.5" superposition-tags="validator" type="EXP" x="17.55" y="44.0"/>
+      <place name="Jam" x="29.0" y="49.0"/>
+      <place name="ReadyForBill" x="39.0" y="31.0"/>
+      <transition name="senseBill" nservers-x="0.5" superposition-tags="auto" type="EXP" x="34.55" y="31.0"/>
+      <transition name="startSession" nservers-x="0.5" superposition-tags="machine" type="EXP" x="25.55" y="31.0"/>
+      <place name="waitReady" x="30.0" y="31.0"/>
+      <transition name="endSession" nservers-x="0.5" superposition-tags="machine" type="EXP" x="36.55" y="25.0"/>
+      <transition name="noSenseBill" nservers-x="0.5" superposition-tags="auto" type="EXP" x="25.55" y="25.0"/>
+      <place name="waitIdle" x="30.0" y="25.0"/>
+      <transition name="initialize2" nservers-x="0.5" superposition-tags="machine" type="EXP" x="7.55" y="54.0"/>
+      <place name="ErrorReset" x="29.0" y="54.0"/>
+      <place marking="1" name="StartSession" x="38.0" y="4.0"/>
+      <place marking="1" name="EndSession" x="48.0" y="4.0"/>
+      <place name="Stacked" x="56.0" y="4.0"/>
     </nodes>
     <edges>
       <arc head="initialize" kind="INPUT" tail="PowerOn"/>
@@ -1099,7 +1106,7 @@
       <arc head="rejected" kind="INPUT" tail="ValidatingBill"/>
       <arc head="error" kind="INPUT" tail="ValidatingBill"/>
       <arc head="waitBillTimeout" kind="INPUT" mult-k="0.8438476562500001" tail="ValidatingBill">
-        <point x="50.5" y="5.0"/>
+        <point x="51.5" y="22.0"/>
       </arc>
       <arc head="stacked" kind="INPUT" tail="ValidatingBill"/>
       <arc head="escrowRejected" kind="INPUT" tail="ValidatingBill"/>
@@ -1121,6 +1128,9 @@
       <arc head="ErrorReset" kind="OUTPUT" tail="error"/>
       <arc head="initialize2" kind="INPUT" tail="ErrorReset"/>
       <arc head="Initializing" kind="OUTPUT" tail="initialize2"/>
+      <arc head="startSession" kind="INPUT" tail="StartSession"/>
+      <arc head="endSession" kind="INPUT" tail="EndSession"/>
+      <arc head="stacked" kind="INPUT" tail="Stacked"/>
     </edges>
   </gspn>
   <gspn name="ValidatorDeviceFull" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
