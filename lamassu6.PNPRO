@@ -825,13 +825,13 @@
       <arc head="ReadyForFirstBill" kind="OUTPUT" tail="readyForBill"/>
     </edges>
   </gspn>
-  <gspn name="CashInBill" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="50">
+  <gspn name="CashInBill" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place label-x="-0.5" label-y="2.5" marking="1" name="Start" x="31.0" y="20.0"/>
-      <transition name="waitBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="20.55" y="10.0"/>
+      <place label-y="2.5" name="Start" x="31.0" y="20.0"/>
+      <transition name="waitBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="31.55" y="9.0"/>
       <transition label-y="-2.5" name="vendValid" nservers-x="0.5" superpos-y="-3.5" superposition-tags="ValidatorBill" type="EXP" x="73.55" y="20.0"/>
-      <transition label-x="2.0" label-y="-2.0" name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="27.55" y="10.0"/>
-      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="34.55" y="10.0"/>
+      <transition name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="38.55" y="5.0"/>
+      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="50.55" y="5.0"/>
       <transition name="readBill" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="41.55" y="20.0"/>
       <place name="CheckAmount" x="49.0" y="20.0"/>
       <transition name="escrowAccept" nservers-x="0.5" superposition-tags="machine" type="EXP" x="58.55" y="20.0"/>
@@ -842,7 +842,7 @@
       <place name="InformLowBalance" x="68.0" y="83.0"/>
       <transition name="lowBalance" nservers-x="0.5" superposition-tags="machine" type="EXP" x="68.55" y="56.0"/>
       <transition name="needAmlKyc" nservers-x="0.5" superposition-tags="machine" type="EXP" x="50.55" y="56.0"/>
-      <transition name="lowBalanceTimeout" nservers-x="0.5" superposition-tags="timeout" type="EXP" x="62.55" y="83.0"/>
+      <transition name="lowBalanceOk" nservers-x="0.5" type="EXP" x="62.55" y="83.0"/>
       <transition name="runAmlKyc" nservers-x="0.5" type="EXP" x="50.55" y="72.0"/>
       <place name="AmlKyc" x="50.0" y="78.0"/>
       <transition name="acceptAmlKyc" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="38.55" y="78.0"/>
@@ -852,15 +852,17 @@
       <place name="rejectComplete" x="17.0" y="83.0"/>
       <place name="EscrowRejected" x="25.0" y="46.0"/>
       <place name="ChooseDenyReason" x="60.0" y="56.0"/>
-      <transition name="cashInBillDone" nservers-x="0.5" superposition-tags="user" type="EXP" x="16.55" y="20.0"/>
+      <transition name="cashInBillDone" nservers-x="0.5" superposition-tags="user" type="EXP" x="41.55" y="28.0"/>
       <place name="Stacking2" x="78.0" y="20.0"/>
       <transition name="billComplete" nservers-x="0.5" superposition-tags="Validator" type="EXP" x="83.55" y="20.0"/>
+      <transition name="runCashInBill" nservers-x="0.5" type="EXP" x="21.55" y="20.0"/>
+      <transition name="stackingJam" nservers-x="0.5" type="EXP" x="66.55" y="11.0"/>
+      <transition name="stacking2Jam" nservers-x="0.5" type="EXP" x="78.55" y="11.0"/>
     </nodes>
     <edges>
       <arc head="waitBillTimeout" kind="INPUT" tail="Start"/>
       <arc head="readBill" kind="INPUT" tail="Start"/>
       <arc head="rejected" kind="INPUT" tail="Start"/>
-      <arc head="jam" kind="INPUT" tail="Start"/>
       <arc head="escrowAccept" kind="INPUT" tail="CheckAmount"/>
       <arc head="Stacking" kind="OUTPUT" tail="escrowAccept"/>
       <arc head="vendValid" kind="INPUT" tail="Stacking"/>
@@ -871,8 +873,8 @@
       <arc head="lowBalance" kind="INPUT" tail="ChooseDenyReason"/>
       <arc head="InformLowBalance" kind="OUTPUT" tail="lowBalance"/>
       <arc head="needAmlKyc" kind="INPUT" tail="ChooseDenyReason"/>
-      <arc head="lowBalanceTimeout" kind="INPUT" tail="InformLowBalance"/>
-      <arc head="rejectComplete" kind="OUTPUT" tail="lowBalanceTimeout"/>
+      <arc head="lowBalanceOk" kind="INPUT" tail="InformLowBalance"/>
+      <arc head="rejectComplete" kind="OUTPUT" tail="lowBalanceOk"/>
       <arc head="rejectAmlKyc" kind="INPUT" tail="AmlKyc"/>
       <arc head="acceptAmlKyc" kind="INPUT" tail="AmlKyc"/>
       <arc head="AmlKyc" kind="OUTPUT" tail="runAmlKyc"/>
@@ -887,6 +889,10 @@
       <arc head="cashInBillDone" kind="INPUT" tail="Start"/>
       <arc head="Stacking2" kind="OUTPUT" tail="vendValid"/>
       <arc head="billComplete" kind="INPUT" tail="Stacking2"/>
+      <arc head="Start" kind="OUTPUT" tail="runCashInBill"/>
+      <arc head="stackingJam" kind="INPUT" tail="Stacking"/>
+      <arc head="stacking2Jam" kind="INPUT" tail="Stacking2"/>
+      <arc head="jam" kind="INPUT" tail="Start"/>
     </edges>
   </gspn>
   <gspn name="Attic" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
