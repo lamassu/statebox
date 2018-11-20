@@ -1233,4 +1233,27 @@
       <arc head="Completed" kind="OUTPUT" tail="sendCoins"/>
     </edges>
   </gspn>
+  <gspn name="Arrows" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="150">
+    <nodes>
+      <place marking="4" name="S1" x="2.0" y="9.0"/>
+      <place name="D2" x="10.0" y="7.0"/>
+      <place name="D1" x="10.0" y="11.0"/>
+      <transition name="T1" nservers-x="0.5" type="EXP" x="6.55" y="7.0"/>
+      <place marking="2" name="S2" x="2.0" y="5.0"/>
+      <place name="D3" x="10.0" y="3.0"/>
+    </nodes>
+    <edges>
+      <arc head="T1" kind="INPUT" mult-k="0.8838867187499999" tail="S2">
+        <point x="5.116796875" y="7.0583984375"/>
+      </arc>
+      <arc head="T1" kind="INPUT" mult="4" mult-k="0.95283203125" mult-x="0.999998409035471" mult-y="1.000000795482265" tail="S1">
+        <point x="4.983203125" y="9.0083984375"/>
+      </arc>
+      <arc head="D3" kind="OUTPUT" mult="2" mult-k="1.0889648437500004" tail="T1">
+        <point x="8.875390625" y="6.124609375"/>
+      </arc>
+      <arc head="D2" kind="OUTPUT" tail="T1"/>
+      <arc head="D1" kind="OUTPUT" tail="T1"/>
+    </edges>
+  </gspn>
 </project>
