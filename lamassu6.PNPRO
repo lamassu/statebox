@@ -654,69 +654,6 @@
   </gspn>
   <gspn name="AmlKycTierSmsHandleCode" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place marking="1" name="Start" x="7.0" y="37.0"/>
-      <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="7.55" y="26.0"/>
-      <transition name="timeout" nservers-x="0.5" type="EXP" x="15.55" y="37.0"/>
-      <place name="didReceiveCode" x="22.0" y="37.0"/>
-      <transition name="receivedCode" nservers-x="0.5" type="EXP" x="29.55" y="30.0"/>
-      <transition name="didNotReceiveCode" nservers-x="0.5" type="EXP" x="29.55" y="42.0"/>
-      <place name="AskForCode2" x="35.0" y="30.0"/>
-      <transition name="inputCode2" nservers-x="0.5" type="EXP" x="35.55" y="25.0"/>
-      <transition name="timeout2" nservers-x="0.5" type="EXP" x="40.55" y="30.0"/>
-      <transition name="cancel" nservers-x="0.5" type="EXP" x="15.55" y="43.0"/>
-      <transition name="cancel2" nservers-x="0.5" type="EXP" x="41.55" y="37.0"/>
-      <place name="didReceiveCode2" x="45.0" y="30.0"/>
-      <transition name="receivedCode2" nservers-x="0.5" type="EXP" x="51.55" y="30.0"/>
-      <transition name="didNotReceiveCode2" nservers-x="0.5" type="EXP" x="50.55" y="37.0"/>
-      <place name="AskForCode3" x="56.0" y="30.0"/>
-      <transition name="inputCode3" nservers-x="0.5" type="EXP" x="56.55" y="25.0"/>
-      <transition name="timeout3" nservers-x="0.5" type="EXP" x="68.55" y="37.0"/>
-      <transition name="cancel3" nservers-x="0.5" type="EXP" x="62.55" y="37.0"/>
-      <place name="HasCode" x="33.0" y="14.0"/>
-      <transition name="amlKycTierSmsHandleCodeInputCode" nservers-x="0.5" type="EXP" x="33.55" y="7.0"/>
-      <place name="NoCode" x="35.0" y="46.0"/>
-      <place name="Cancel" x="47.0" y="47.0"/>
-      <transition name="amlKycTierSmsHandleCodeNoCode" nservers-x="0.5" type="EXP" x="24.55" y="46.0"/>
-      <transition name="amlKycTierSmsHandleCodeCancel" nservers-x="0.5" type="EXP" x="62.55" y="47.0"/>
-    </nodes>
-    <edges>
-      <arc head="inputCode" kind="INPUT" tail="Start"/>
-      <arc head="timeout" kind="INPUT" tail="Start"/>
-      <arc head="didReceiveCode" kind="OUTPUT" tail="timeout"/>
-      <arc head="receivedCode" kind="INPUT" tail="didReceiveCode"/>
-      <arc head="didNotReceiveCode" kind="INPUT" tail="didReceiveCode"/>
-      <arc head="AskForCode2" kind="OUTPUT" tail="receivedCode"/>
-      <arc head="inputCode2" kind="INPUT" tail="AskForCode2"/>
-      <arc head="timeout2" kind="INPUT" tail="AskForCode2"/>
-      <arc head="cancel" kind="INPUT" tail="Start"/>
-      <arc head="cancel2" kind="INPUT" tail="AskForCode2"/>
-      <arc head="receivedCode2" kind="INPUT" tail="didReceiveCode2"/>
-      <arc head="didNotReceiveCode2" kind="INPUT" tail="didReceiveCode2"/>
-      <arc head="didReceiveCode2" kind="OUTPUT" tail="timeout2"/>
-      <arc head="AskForCode3" kind="OUTPUT" tail="receivedCode2"/>
-      <arc head="inputCode3" kind="INPUT" tail="AskForCode3"/>
-      <arc head="timeout3" kind="INPUT" tail="AskForCode3"/>
-      <arc head="cancel3" kind="INPUT" tail="AskForCode3"/>
-      <arc head="HasCode" kind="OUTPUT" tail="inputCode"/>
-      <arc head="HasCode" kind="OUTPUT" tail="inputCode2"/>
-      <arc head="HasCode" kind="OUTPUT" tail="inputCode3"/>
-      <arc head="amlKycTierSmsHandleCodeInputCode" kind="INPUT" tail="HasCode">
-        <point x="34.0" y="10.5"/>
-      </arc>
-      <arc head="Cancel" kind="OUTPUT" mult-k="1.1491210937499998" tail="cancel">
-        <point x="23.0" y="57.0"/>
-      </arc>
-      <arc head="Cancel" kind="OUTPUT" tail="cancel2"/>
-      <arc head="Cancel" kind="OUTPUT" tail="cancel3"/>
-      <arc head="Cancel" kind="OUTPUT" tail="timeout3"/>
-      <arc head="NoCode" kind="OUTPUT" tail="didNotReceiveCode"/>
-      <arc head="NoCode" kind="OUTPUT" tail="didNotReceiveCode2"/>
-      <arc head="amlKycTierSmsHandleCodeCancel" kind="INPUT" tail="Cancel"/>
-      <arc head="amlKycTierSmsHandleCodeNoCode" kind="INPUT" tail="NoCode"/>
-    </edges>
-  </gspn>
-  <gspn name="AmlKycTierSmsHandleCodeLoop" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
-    <nodes>
       <place marking="1" name="Start" x="2.0" y="16.0"/>
       <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="4.55" y="5.0"/>
       <transition name="timeout" nservers-x="0.5" type="EXP" x="12.55" y="16.0"/>
@@ -742,6 +679,64 @@
       <arc head="amlKycTierSmsHandleCodeSucceed" kind="OUTPUT" tail="amlKycTierSmsHandleCodeInputCode"/>
       <arc head="amlKycTierSmsHandleCodeFail" kind="OUTPUT" tail="cancel"/>
       <arc head="amlKycTierSmsHandleCodeFail" kind="OUTPUT" tail="didNotReceiveCode"/>
+    </edges>
+  </gspn>
+  <gspn name="PhotoCapture" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place marking="1" name="RequestPhoto" x="11.0" y="22.0"/>
+      <transition name="acceptPhoto" nservers-x="0.5" type="EXP" x="18.55" y="22.0"/>
+      <transition name="rejectPhoto" nservers-x="0.5" type="EXP" x="11.55" y="14.0"/>
+      <place name="CapturingPhoto" x="24.0" y="22.0"/>
+      <transition name="goodPhoto" nservers-x="0.5" type="EXP" x="29.55" y="22.0"/>
+      <transition label-x="3.0" label-y="0.0" name="badPhoto" nservers-x="0.5" type="EXP" x="29.55" y="16.0"/>
+      <place label-x="3.5" label-y="0.0" name="BadPhoto" x="29.0" y="10.0"/>
+      <transition name="tryAgain" nservers-x="0.5" type="EXP" x="18.55" y="10.0"/>
+      <transition name="cancelPhoto" nservers-x="0.5" type="EXP" x="29.55" y="6.0"/>
+      <place label-y="-2.0" name="NoPhoto" x="11.0" y="6.0"/>
+      <transition name="noPhoto" nservers-x="0.5" type="EXP" x="4.55" y="6.0"/>
+    </nodes>
+    <edges>
+      <arc head="acceptPhoto" kind="INPUT" tail="RequestPhoto"/>
+      <arc head="rejectPhoto" kind="INPUT" tail="RequestPhoto"/>
+      <arc head="CapturingPhoto" kind="OUTPUT" tail="acceptPhoto"/>
+      <arc head="goodPhoto" kind="INPUT" tail="CapturingPhoto"/>
+      <arc head="badPhoto" kind="INPUT" tail="CapturingPhoto"/>
+      <arc head="tryAgain" kind="INPUT" tail="BadPhoto"/>
+      <arc head="cancelPhoto" kind="INPUT" tail="BadPhoto"/>
+      <arc head="BadPhoto" kind="OUTPUT" tail="badPhoto"/>
+      <arc head="NoPhoto" kind="OUTPUT" tail="rejectPhoto"/>
+      <arc head="NoPhoto" kind="OUTPUT" tail="cancelPhoto"/>
+      <arc head="noPhoto" kind="INPUT" tail="NoPhoto"/>
+      <arc head="CapturingPhoto" kind="OUTPUT" tail="tryAgain"/>
+    </edges>
+  </gspn>
+  <gspn name="PT" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place marking="1" name="mayWe" superposition-tags="user" x="5.0" y="18.0"/>
+      <transition name="acceptOrSend" nservers-x="0.5" superpos-y="2.0" superposition-tags="choice" type="EXP" x="5.55" y="12.0"/>
+      <place name="holdStill" superposition-tags="notice" x="12.0" y="12.0"/>
+      <place name="sendingCoins" superposition-tags="notice" x="12.0" y="6.0"/>
+      <transition name="picGoodBad" nservers-x="0.5" superpos-y="2.0" superposition-tags="result" type="EXP" x="19.55" y="12.0"/>
+      <place name="badPic" superposition-tags="user" x="26.0" y="6.0"/>
+      <place name="goodPic" superposition-tags="notice" x="26.0" y="12.0"/>
+      <transition name="tryOrSend" nservers-x="0.5" superposition-tags="choice" type="EXP" x="19.55" y="6.0"/>
+      <transition name="enableValidator" nservers-x="0.5" superposition-tags="validator" type="EXP" x="32.55" y="12.0"/>
+      <place name="acceptingBills" superposition-tags="user" x="37.0" y="12.0"/>
+      <place name="chooseCoin" superposition-tags="user" x="5.0" y="6.0"/>
+    </nodes>
+    <edges>
+      <arc head="acceptOrSend" kind="INPUT" tail="mayWe"/>
+      <arc head="holdStill" kind="OUTPUT" tail="acceptOrSend"/>
+      <arc head="sendingCoins" kind="OUTPUT" tail="acceptOrSend"/>
+      <arc head="picGoodBad" kind="INPUT" tail="holdStill"/>
+      <arc head="badPic" kind="OUTPUT" tail="picGoodBad"/>
+      <arc head="goodPic" kind="OUTPUT" tail="picGoodBad"/>
+      <arc head="tryOrSend" kind="INPUT" tail="badPic"/>
+      <arc head="sendingCoins" kind="OUTPUT" tail="tryOrSend"/>
+      <arc head="holdStill" kind="OUTPUT" tail="tryOrSend"/>
+      <arc head="enableValidator" kind="INPUT" tail="goodPic"/>
+      <arc head="acceptingBills" kind="OUTPUT" tail="enableValidator"/>
+      <arc head="chooseCoin" kind="OUTPUT" tail="acceptOrSend"/>
     </edges>
   </gspn>
   <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
