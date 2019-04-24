@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="mayWe" version="121">
+  <gspn name="PT" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place name="mayWe" superposition-tags="user" x="5.0" y="18.0"/>
+      <transition name="acceptOrSend" nservers-x="0.5" superpos-y="2.0" superposition-tags="choice" type="EXP" x="5.55" y="12.0"/>
+      <place name="holdStill" superposition-tags="notice" x="12.0" y="12.0"/>
+      <place name="sendingCoins" superposition-tags="notice" x="12.0" y="6.0"/>
+      <transition name="picGoodBad" nservers-x="0.5" superpos-y="2.0" superposition-tags="result" type="EXP" x="19.55" y="12.0"/>
+      <place name="badPic" superposition-tags="user" x="26.0" y="6.0"/>
+      <place name="goodPic" superposition-tags="notice" x="26.0" y="12.0"/>
+      <transition name="tryOrSend" nservers-x="0.5" superposition-tags="choice" type="EXP" x="19.55" y="6.0"/>
+      <transition name="enableValidator" nservers-x="0.5" superposition-tags="validator" type="EXP" x="32.55" y="12.0"/>
+      <place name="acceptingBills" superposition-tags="user" x="37.0" y="12.0"/>
+      <place name="chooseCoin" superposition-tags="user" x="5.0" y="6.0"/>
+    </nodes>
+    <edges>
+      <arc head="acceptOrSend" kind="INPUT" tail="mayWe"/>
+      <arc head="holdStill" kind="OUTPUT" tail="acceptOrSend"/>
+      <arc head="sendingCoins" kind="OUTPUT" tail="acceptOrSend"/>
+      <arc head="picGoodBad" kind="INPUT" tail="holdStill"/>
+      <arc head="badPic" kind="OUTPUT" tail="picGoodBad"/>
+      <arc head="goodPic" kind="OUTPUT" tail="picGoodBad"/>
+      <arc head="tryOrSend" kind="INPUT" tail="badPic"/>
+      <arc head="sendingCoins" kind="OUTPUT" tail="tryOrSend"/>
+      <arc head="holdStill" kind="OUTPUT" tail="tryOrSend"/>
+      <arc head="enableValidator" kind="INPUT" tail="goodPic"/>
+      <arc head="acceptingBills" kind="OUTPUT" tail="enableValidator"/>
+      <arc head="chooseCoin" kind="OUTPUT" tail="acceptOrSend"/>
+    </edges>
+  </gspn>
+  <measures gspn-name="PT" name="Measures" simplified-UI="false">
+    <assignments/>
+    <greatspn/>
+    <formulas>
+      <formula comment="Basic statistics of the toolchain execution." language="STAT"/>
+    </formulas>
+  </measures>
+</project>

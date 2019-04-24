@@ -675,9 +675,9 @@
       <place name="HasCode" x="33.0" y="14.0"/>
       <transition name="amlKycTierSmsHandleCodeInputCode" nservers-x="0.5" type="EXP" x="33.55" y="7.0"/>
       <place name="NoCode" x="35.0" y="46.0"/>
-      <place name="Cancel" x="41.0" y="60.0"/>
-      <transition name="amlKycTierSmsHandleCodeNoCode" nservers-x="0.5" type="EXP" x="30.55" y="53.0"/>
-      <transition name="amlKycTierSmsHandleCodeCancel" nservers-x="0.5" type="EXP" x="41.55" y="66.0"/>
+      <place name="Cancel" x="47.0" y="47.0"/>
+      <transition name="amlKycTierSmsHandleCodeNoCode" nservers-x="0.5" type="EXP" x="24.55" y="46.0"/>
+      <transition name="amlKycTierSmsHandleCodeCancel" nservers-x="0.5" type="EXP" x="62.55" y="47.0"/>
     </nodes>
     <edges>
       <arc head="inputCode" kind="INPUT" tail="Start"/>
@@ -715,10 +715,39 @@
       <arc head="amlKycTierSmsHandleCodeNoCode" kind="INPUT" tail="NoCode"/>
     </edges>
   </gspn>
-  <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="50">
+  <gspn name="AmlKycTierSmsHandleCodeLoop" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place marking="1" name="ScanPhoneScreen" x="15.0" y="29.0"/>
-      <transition name="scanTimeout" nservers-x="0.5" superposition-tags="timeout,user" type="EXP" x="11.55" y="50.0"/>
+      <place marking="1" name="Start" x="2.0" y="16.0"/>
+      <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="4.55" y="5.0"/>
+      <transition name="timeout" nservers-x="0.5" type="EXP" x="12.55" y="16.0"/>
+      <place name="didReceiveCode" x="19.0" y="16.0"/>
+      <transition name="receivedCode" nservers-x="0.5" type="EXP" x="12.55" y="9.0"/>
+      <transition name="didNotReceiveCode" nservers-x="0.5" type="EXP" x="27.55" y="16.0"/>
+      <transition name="cancel" nservers-x="0.5" type="EXP" x="27.55" y="27.0"/>
+      <place name="HasCode" x="27.0" y="5.0"/>
+      <transition name="amlKycTierSmsHandleCodeInputCode" nservers-x="0.5" type="EXP" x="42.55" y="5.0"/>
+      <place name="amlKycTierSmsHandleCodeFail" x="40.0" y="18.0"/>
+      <place name="amlKycTierSmsHandleCodeSucceed" x="54.0" y="5.0"/>
+    </nodes>
+    <edges>
+      <arc head="inputCode" kind="INPUT" tail="Start"/>
+      <arc head="timeout" kind="INPUT" tail="Start"/>
+      <arc head="didReceiveCode" kind="OUTPUT" tail="timeout"/>
+      <arc head="receivedCode" kind="INPUT" tail="didReceiveCode"/>
+      <arc head="didNotReceiveCode" kind="INPUT" tail="didReceiveCode"/>
+      <arc head="cancel" kind="INPUT" tail="Start"/>
+      <arc head="HasCode" kind="OUTPUT" tail="inputCode"/>
+      <arc head="Start" kind="OUTPUT" tail="receivedCode"/>
+      <arc head="amlKycTierSmsHandleCodeInputCode" kind="INPUT" tail="HasCode"/>
+      <arc head="amlKycTierSmsHandleCodeSucceed" kind="OUTPUT" tail="amlKycTierSmsHandleCodeInputCode"/>
+      <arc head="amlKycTierSmsHandleCodeFail" kind="OUTPUT" tail="cancel"/>
+      <arc head="amlKycTierSmsHandleCodeFail" kind="OUTPUT" tail="didNotReceiveCode"/>
+    </edges>
+  </gspn>
+  <gspn name="CashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place name="ScanPhoneScreen" x="15.0" y="29.0"/>
+      <transition name="scanTimeout" nservers-x="0.5" superposition-tags="timeout,user" type="EXP" x="25.55" y="50.0"/>
       <transition name="addrScanned" nservers-x="0.5" superposition-tags="machine" type="EXP" x="25.55" y="29.0"/>
       <place name="SendingCoins" x="152.0" y="29.0"/>
       <place name="Complete" x="171.0" y="29.0"/>
@@ -735,10 +764,10 @@
       <transition name="acceptAmlKyc" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="52.55" y="29.0"/>
       <transition name="rejectAmlKyc" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="44.55" y="50.0"/>
       <place name="HasAddress" x="32.0" y="29.0"/>
-      <transition name="badAddress" nservers-x="0.5" superposition-tags="machine" type="EXP" x="15.55" y="22.0"/>
-      <place name="informBadAddress" x="15.0" y="15.0"/>
-      <transition name="badAddressTimeout" nservers-x="0.5" superposition-tags="timeout,user" type="EXP" x="10.55" y="8.0"/>
-      <transition name="badAddressConfirm" nservers-x="0.5" superposition-tags="user" type="EXP" x="20.55" y="8.0"/>
+      <transition name="badAddress" nservers-x="0.5" superposition-tags="machine" type="EXP" x="20.55" y="22.0"/>
+      <place name="informBadAddress" x="20.0" y="15.0"/>
+      <transition name="badAddressTimeout" nservers-x="0.5" superposition-tags="timeout,user" type="EXP" x="15.55" y="8.0"/>
+      <transition name="badAddressConfirm" nservers-x="0.5" superposition-tags="user" type="EXP" x="25.55" y="8.0"/>
       <place name="ReadyForFirstBill" x="81.0" y="29.0"/>
       <transition name="runCashInBill" nservers-x="0.5" type="EXP" x="88.55" y="29.0"/>
       <place name="firstBill" x="97.0" y="29.0"/>
@@ -757,11 +786,12 @@
       <transition name="jam" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="83.55" y="58.0"/>
       <transition name="cashInBillDone" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="106.55" y="50.0"/>
       <transition name="completeEscrowReject" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="90.55" y="7.0"/>
-      <transition name="scanCancel" nservers-x="0.5" superposition-tags="user" type="EXP" x="19.55" y="50.0"/>
+      <transition name="scanCancel" nservers-x="0.5" superposition-tags="user" type="EXP" x="32.55" y="50.0"/>
       <transition name="startSession" nservers-x="0.5" superposition-tags="ValidatorDevice" type="EXP" x="63.55" y="29.0"/>
       <transition name="readyForBill" nservers-x="0.5" superposition-tags="ValidatorDevice" type="EXP" x="74.55" y="29.0"/>
       <place name="HaveAmlKyc" x="57.0" y="29.0"/>
       <place name="WaitForStart" x="68.0" y="29.0"/>
+      <transition name="scanPhoneScreen" nservers-x="0.5" type="EXP" x="10.55" y="29.0"/>
     </nodes>
     <edges>
       <arc head="scanTimeout" kind="INPUT" tail="ScanPhoneScreen"/>
@@ -823,6 +853,7 @@
       <arc head="WaitForStart" kind="OUTPUT" tail="startSession"/>
       <arc head="readyForBill" kind="INPUT" tail="WaitForStart"/>
       <arc head="ReadyForFirstBill" kind="OUTPUT" tail="readyForBill"/>
+      <arc head="ScanPhoneScreen" kind="OUTPUT" tail="scanPhoneScreen"/>
     </edges>
   </gspn>
   <gspn name="CashInBill" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
