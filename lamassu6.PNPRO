@@ -531,22 +531,22 @@
   </gspn>
   <gspn name="RunTier" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place marking="1" name="RunTier" superposition-tags="screen,initial" x="2.0" y="8.0"/>
-      <transition name="sms" nservers-x="0.5" superposition-tags="machine" type="EXP" x="8.55" y="8.0"/>
-      <place name="Sms" superposition-tags="Sms" x="14.0" y="8.0"/>
-      <transition name="smsSuccess" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="24.55" y="4.0"/>
-      <transition name="smsAbort" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="24.55" y="8.0"/>
-      <transition name="smsRetry" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="24.55" y="12.0"/>
-      <transition name="runTierSuccess" nservers-x="0.5" type="EXP" x="51.55" y="13.0"/>
-      <transition name="runTierAbort" nservers-x="0.5" type="EXP" x="51.55" y="17.0"/>
-      <transition name="runTierRetry" nservers-x="0.5" type="EXP" x="51.55" y="21.0"/>
-      <place name="RunTierSuccess" x="44.0" y="13.0"/>
-      <place name="RunTierAbort" x="44.0" y="17.0"/>
-      <place name="RunTierRetry" x="44.0" y="21.0"/>
-      <place name="PhotoCapture" superposition-tags="PhotoCapture" x="14.0" y="20.0"/>
-      <transition name="photoCapture" nservers-x="0.5" superposition-tags="machine" type="EXP" x="8.55" y="20.0"/>
-      <transition name="photoCaptureGoodPhoto" nservers-x="0.5" superposition-tags="PhotoCapture" type="EXP" x="24.55" y="20.0"/>
-      <transition name="photoCaptureNoPhoto" nservers-x="0.5" superposition-tags="PhotoCapture" type="EXP" x="24.55" y="25.0"/>
+      <place marking="1" name="RunTier" superposition-tags="screen,initial" x="4.0" y="8.0"/>
+      <transition name="sms" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="8.0"/>
+      <place name="Sms" superposition-tags="Sms" x="16.0" y="8.0"/>
+      <transition name="smsSuccess" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="26.55" y="4.0"/>
+      <transition name="smsAbort" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="26.55" y="8.0"/>
+      <transition name="smsRetry" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="26.55" y="12.0"/>
+      <transition name="runTierSuccess" nservers-x="0.5" type="EXP" x="53.55" y="13.0"/>
+      <transition name="runTierAbort" nservers-x="0.5" type="EXP" x="53.55" y="17.0"/>
+      <transition name="runTierRetry" nservers-x="0.5" type="EXP" x="53.55" y="21.0"/>
+      <place name="RunTierSuccess" x="46.0" y="13.0"/>
+      <place name="RunTierAbort" x="46.0" y="17.0"/>
+      <place name="RunTierRetry" x="46.0" y="21.0"/>
+      <place name="PhotoCapture" superposition-tags="PhotoCapture" x="16.0" y="20.0"/>
+      <transition name="photoCapture" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="20.0"/>
+      <transition name="photoCaptureGoodPhoto" nservers-x="0.5" superposition-tags="PhotoCapture" type="EXP" x="26.55" y="20.0"/>
+      <transition name="photoCaptureNoPhoto" nservers-x="0.5" superposition-tags="PhotoCapture" type="EXP" x="26.55" y="25.0"/>
     </nodes>
     <edges>
       <arc head="sms" kind="INPUT" tail="RunTier"/>
@@ -697,7 +697,7 @@
   </gspn>
   <gspn name="PhotoCapture" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="RequestPhoto" superposition-tags="screen,initial" x="7.0" y="26.0"/>
+      <place marking="1" name="PhotoCapture" superposition-tags="screen,initial" x="7.0" y="26.0"/>
       <transition name="acceptPhoto" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="26.0"/>
       <transition name="rejectPhoto" nservers-x="0.5" superposition-tags="user" type="EXP" x="11.55" y="18.0"/>
       <place name="CapturingPhoto" superposition-tags="screen" x="24.0" y="26.0"/>
@@ -710,8 +710,8 @@
       <transition name="photoCaptureNoPhoto" nservers-x="0.5" type="EXP" x="11.55" y="3.0"/>
     </nodes>
     <edges>
-      <arc head="acceptPhoto" kind="INPUT" tail="RequestPhoto"/>
-      <arc head="rejectPhoto" kind="INPUT" tail="RequestPhoto"/>
+      <arc head="acceptPhoto" kind="INPUT" tail="PhotoCapture"/>
+      <arc head="rejectPhoto" kind="INPUT" tail="PhotoCapture"/>
       <arc head="CapturingPhoto" kind="OUTPUT" tail="acceptPhoto"/>
       <arc head="photoCaptureGoodPhoto" kind="INPUT" tail="CapturingPhoto"/>
       <arc head="badPhoto" kind="INPUT" tail="CapturingPhoto"/>
@@ -1271,6 +1271,19 @@
       </arc>
       <arc head="D2" kind="OUTPUT" tail="T1"/>
       <arc head="D1" kind="OUTPUT" tail="T1"/>
+    </edges>
+  </gspn>
+  <gspn name="PT" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <transition name="t3" nservers-x="0.5" type="EXP" x="15.55" y="8.0"/>
+      <place name="T3" x="20.0" y="8.0"/>
+      <transition name="t2" nservers-x="0.5" type="EXP" x="25.55" y="8.0"/>
+      <place name="N3" superposition-tags="initial" x="10.0" y="8.0"/>
+    </nodes>
+    <edges>
+      <arc head="T3" kind="OUTPUT" tail="t3"/>
+      <arc head="t2" kind="INPUT" tail="T3"/>
+      <arc head="t3" kind="INPUT" tail="N3"/>
     </edges>
   </gspn>
 </project>
