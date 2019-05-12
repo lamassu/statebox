@@ -727,360 +727,104 @@
   </gspn>
   <gspn name="ReceiveCoins" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place marking="1" name="ReceiveCoins" x="3.0" y="5.0"/>
-      <transition name="zeroConf" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="5.0"/>
-      <place name="ZeroConf" x="16.0" y="5.0"/>
-      <transition name="instant" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="11.0"/>
-      <place name="AuthorizeCoins" x="16.0" y="11.0"/>
-      <transition name="zeroConfRedeem" nservers-x="0.5" type="EXP" x="22.55" y="5.0"/>
-      <transition name="authorizeCoinsSuccess" nservers-x="0.5" type="EXP" x="22.55" y="11.0"/>
-      <place name="Success" x="31.0" y="5.0"/>
-      <transition name="receiveCoinsSuccess" nservers-x="0.5" type="EXP" x="37.55" y="5.0"/>
+      <place marking="1" name="ReceiveCoins" x="3.0" y="12.0"/>
+      <transition name="zeroConf" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="12.0"/>
+      <place name="Redeem" x="18.0" y="12.0"/>
+      <transition name="instant" nservers-x="0.5" superposition-tags="machine" type="EXP" x="3.55" y="23.0"/>
+      <place name="AuthorizeCoins" x="18.0" y="23.0"/>
+      <transition name="redeemSuccess" nservers-x="0.5" type="EXP" x="25.55" y="12.0"/>
+      <transition name="authorizeCoinsSuccess" nservers-x="0.5" type="EXP" x="31.55" y="23.0"/>
+      <place name="Success" x="31.0" y="12.0"/>
+      <transition name="receiveCoinsSuccess" nservers-x="0.5" type="EXP" x="37.55" y="12.0"/>
+      <transition name="authorizeCoinsRedeem" nservers-x="0.5" type="EXP" x="18.55" y="18.0"/>
+      <place name="Abort" x="46.0" y="17.0"/>
+      <transition name="authorizeCoinsAbort" nservers-x="0.5" type="EXP" x="37.55" y="30.0"/>
+      <transition name="redeemAbort" nservers-x="0.5" type="EXP" x="37.55" y="3.0"/>
+      <transition name="receiveCoinsAbort" nservers-x="0.5" type="EXP" x="51.55" y="17.0"/>
     </nodes>
     <edges>
-      <arc head="Success" kind="OUTPUT" tail="zeroConfRedeem"/>
+      <arc head="Success" kind="OUTPUT" tail="redeemSuccess"/>
       <arc head="Success" kind="OUTPUT" tail="authorizeCoinsSuccess"/>
       <arc head="receiveCoinsSuccess" kind="INPUT" tail="Success"/>
+      <arc head="Redeem" kind="OUTPUT" tail="authorizeCoinsRedeem"/>
+      <arc head="redeemSuccess" kind="INPUT" tail="Redeem"/>
+      <arc head="authorizeCoinsRedeem" kind="INPUT" tail="AuthorizeCoins"/>
+      <arc head="authorizeCoinsSuccess" kind="INPUT" tail="AuthorizeCoins"/>
+      <arc head="zeroConf" kind="INPUT" tail="ReceiveCoins"/>
+      <arc head="Redeem" kind="OUTPUT" tail="zeroConf"/>
+      <arc head="instant" kind="INPUT" tail="ReceiveCoins"/>
+      <arc head="AuthorizeCoins" kind="OUTPUT" tail="instant"/>
+      <arc head="authorizeCoinsAbort" kind="INPUT" tail="AuthorizeCoins"/>
+      <arc head="Abort" kind="OUTPUT" tail="authorizeCoinsAbort"/>
+      <arc head="redeemAbort" kind="INPUT" tail="Redeem"/>
+      <arc head="Abort" kind="OUTPUT" tail="redeemAbort"/>
+      <arc head="receiveCoinsAbort" kind="INPUT" tail="Abort"/>
     </edges>
   </gspn>
   <gspn name="AuthorizeCoins" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
-    <nodes/>
-    <edges/>
-  </gspn>
-  <gspn name="ZeroConf" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
-    <nodes/>
-    <edges/>
-  </gspn>
-  <gspn name="CashOutNoTimeouts" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place label-y="-2.0" name="CashOut" x="36.0" y="55.0"/>
-      <transition label-y="2.0" name="withRedeem" nservers-x="0.5" rotation="-0.0" type="EXP" x="40.05" y="55.0"/>
-      <transition label-x="-2.5" label-y="0.0" name="direct" nservers-x="0.5" rotation="3.141592653589793" type="EXP" x="40.05" y="65.0"/>
-      <place label-y="-2.0" name="ShowPhoneEntry" x="43.0" y="55.0"/>
-      <transition label-y="1.5" name="gotPhone" nservers-x="0.5" rotation="-0.0" type="EXP" x="46.55" y="55.0"/>
-      <place label-x="0.5" label-y="-1.5" name="ShowQR1" x="59.0" y="65.0"/>
-      <place name="P1" x="51.5" y="65.0"/>
-      <transition name="makeWallet1" nservers-x="0.5" type="EXP" x="55.55" y="65.0"/>
-      <place label-x="-1.5" label-y="-2.0" name="HasWallet" x="55.0" y="41.0"/>
-      <transition label-x="-2.5" label-y="-1.0" name="txSeen" nservers-x="0.5" type="EXP" x="63.55" y="41.0"/>
-      <transition label-x="0.5" name="txAuthorized" nservers-x="0.5" type="EXP" x="73.55" y="41.0"/>
-      <transition name="txConfirmed" nservers-x="0.5" type="EXP" x="88.55" y="41.0"/>
-      <place name="TxSeen" x="68.0" y="41.0"/>
-      <place name="TxAuth" x="83.5" y="41.0"/>
-      <place name="TxConfirmed" x="92.0" y="41.0"/>
-      <place name="TxStale" x="92.0" y="34.0"/>
-      <transition label-x="-3.0" label-y="-0.5" name="txTimeout2" nservers-x="0.5" type="EXP" x="86.55" y="38.0"/>
-      <transition name="txTimeout1" nservers-x="0.5" type="EXP" x="72.55" y="37.0"/>
-      <transition label-y="-2.0" name="txTimeout0" nservers-x="0.5" type="EXP" x="63.55" y="34.0"/>
-      <place name="P3" x="49.0" y="55.0"/>
-      <place label-y="-2.0" name="ShowQR2" x="59.0" y="55.0"/>
-      <transition name="makeWallet2" nservers-x="0.5" type="EXP" x="52.55" y="55.0"/>
-      <transition label-y="2.0" name="notifySeen1" nservers-x="0.5" type="EXP" x="68.55" y="65.0"/>
-      <transition name="redeemStale" nservers-x="0.5" type="EXP" x="106.55" y="34.0"/>
-      <place label-y="-1.5" name="Authorizing1" x="74.0" y="65.0"/>
-      <transition name="dispense1" nservers-x="0.5" type="EXP" x="92.55" y="65.0"/>
-      <place label-x="2.5" label-y="0.0" name="Seen1" x="63.0" y="48.0"/>
-      <transition label-y="2.0" name="notifyAuthorized1" nservers-x="0.5" type="EXP" x="82.55" y="65.0"/>
-      <place label-y="-1.5" name="Authorized1" x="79.0" y="48.0"/>
-      <place label-y="-1.5" name="Dispensing1" x="87.0" y="65.0"/>
-      <place label-y="2.5" name="AwaitingTxConform" x="97.0" y="65.0"/>
-      <transition name="confirmed1" nservers-x="0.5" type="EXP" x="103.55" y="65.0"/>
-      <transition name="stale1" nservers-x="0.5" type="EXP" x="106.55" y="71.0"/>
-      <transition label-y="2.0" name="notifySeen2" nservers-x="0.5" type="EXP" x="63.55" y="55.0"/>
-      <place name="Authorizing2" x="74.0" y="55.0"/>
-      <transition name="notifyAuthorized2" nservers-x="0.5" type="EXP" x="79.55" y="55.0"/>
-      <transition label-x="0.5" label-y="-2.0" name="redeemDispense2" nservers-x="0.5" type="EXP" x="113.55" y="55.0"/>
-      <place name="ReadyForRedeem" x="87.0" y="55.0"/>
-      <transition name="sendSMSCode" nservers-x="0.5" type="EXP" x="92.55" y="55.0"/>
-      <place name="EnterCode" x="96.0" y="55.0"/>
-      <place name="Trade2" x="119.0" y="55.0"/>
-      <place label-y="-2.0" marking="1" name="CashOutStart" x="20.0" y="55.0"/>
-      <transition label-y="2.0" name="requestAmount" nservers-x="0.5" rotation="-0.0" type="EXP" x="24.55" y="55.0"/>
-      <transition label-y="2.0" name="KYC" nservers-x="0.5" type="EXP" x="32.55" y="55.0"/>
-      <place name="P7" x="28.0" y="55.0"/>
-      <transition name="redeemAuthorized" nservers-x="0.5" type="EXP" x="100.55" y="55.0"/>
-      <place name="Dispensing2" x="108.0" y="55.0"/>
-      <place name="Trade1" x="119.0" y="65.0"/>
-      <transition name="tradeSuccess1" nservers-x="0.5" type="EXP" x="124.55" y="65.0"/>
-      <place name="DispensedStale" x="129.0" y="71.0"/>
-      <place name="RedeemStale" x="129.0" y="34.0"/>
-      <place name="DoneSuccess1" x="129.0" y="65.0"/>
-      <transition name="tradeSuccess2" nservers-x="0.5" type="EXP" x="124.55" y="55.0"/>
-      <place name="DoneSuccess2" x="129.0" y="55.0"/>
-      <place label-x="-1.5" label-y="-2.0" name="copy_HasWallet" x="9.0" y="16.0"/>
-      <transition label-x="-2.5" label-y="-1.0" name="copy_txSeen" nservers-x="0.5" type="EXP" x="16.55" y="16.0"/>
-      <transition label-x="0.5" name="copy_txAuthorized" nservers-x="0.5" type="EXP" x="29.55" y="16.0"/>
-      <transition name="copy_txConfirmed" nservers-x="0.5" type="EXP" x="43.55" y="16.0"/>
-      <place name="copy_TxSeen" x="22.0" y="16.0"/>
-      <place name="copy_TxAuth" x="37.0" y="16.0"/>
-      <place name="copy_TxConfirmed" x="49.0" y="16.0"/>
-      <place name="copy_TxStale" x="49.0" y="7.0"/>
-      <transition label-x="-3.0" label-y="-0.5" name="copy_txTimeout2" nservers-x="0.5" type="EXP" x="40.55" y="11.0"/>
-      <transition name="copy_txTimeout1" nservers-x="0.5" type="EXP" x="26.55" y="10.0"/>
-      <transition label-y="-2.0" name="copy_txTimeout0" nservers-x="0.5" type="EXP" x="17.55" y="7.0"/>
+      <place marking="1" name="AuthorizeCoins" x="4.0" y="8.0"/>
+      <transition name="seen" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="11.0"/>
+      <transition name="authorized" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="4.0"/>
+      <transition name="coinTimeout" nservers-x="0.5" superposition-tags="timeout_90s" type="EXP" x="10.55" y="18.0"/>
+      <place name="Seen" superposition-tags="screen" x="17.0" y="11.0"/>
+      <transition name="authorized2" nservers-x="0.5" superposition-tags="machine" type="EXP" x="23.55" y="11.0"/>
+      <transition name="authTimeout" nservers-x="0.5" superposition-tags="timeout_90s" type="EXP" x="23.55" y="18.0"/>
+      <place name="Success" x="29.0" y="8.0"/>
+      <transition name="authorizeCoinsSuccess" nservers-x="0.5" type="EXP" x="36.55" y="8.0"/>
+      <place name="NeedRedeem" x="29.0" y="20.0"/>
+      <transition name="authorizeCoinsRedeem" nservers-x="0.5" type="EXP" x="36.55" y="20.0"/>
+      <place name="Abort" x="29.0" y="27.0"/>
+      <transition name="authorizeCoinsAbort" nservers-x="0.5" type="EXP" x="36.55" y="27.0"/>
     </nodes>
     <edges>
-      <arc head="withRedeem" kind="INPUT" tail="CashOut"/>
-      <arc head="direct" kind="INPUT" mult-k="0.97041015625" tail="CashOut">
-        <point x="38.0" y="66.0"/>
-      </arc>
-      <arc head="ShowPhoneEntry" kind="OUTPUT" tail="withRedeem"/>
-      <arc head="gotPhone" kind="INPUT" tail="ShowPhoneEntry"/>
-      <arc head="P1" kind="OUTPUT" tail="direct"/>
-      <arc head="P3" kind="OUTPUT" tail="gotPhone"/>
-      <arc head="makeWallet1" kind="INPUT" tail="P1"/>
-      <arc head="ShowQR1" kind="OUTPUT" tail="makeWallet1"/>
-      <arc head="txTimeout2" kind="INPUT" tail="TxAuth"/>
-      <arc head="txSeen" kind="INPUT" tail="HasWallet"/>
-      <arc head="TxSeen" kind="OUTPUT" tail="txSeen"/>
-      <arc head="txAuthorized" kind="INPUT" tail="TxSeen"/>
-      <arc head="TxAuth" kind="OUTPUT" tail="txAuthorized"/>
-      <arc head="txTimeout1" kind="INPUT" tail="TxSeen"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout1"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout2"/>
-      <arc head="txConfirmed" kind="INPUT" tail="TxAuth"/>
-      <arc head="TxConfirmed" kind="OUTPUT" tail="txConfirmed"/>
-      <arc head="HasWallet" kind="OUTPUT" tail="makeWallet1"/>
-      <arc head="txTimeout0" kind="INPUT" tail="HasWallet"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout0"/>
-      <arc head="makeWallet2" kind="INPUT" tail="P3"/>
-      <arc head="ShowQR2" kind="OUTPUT" tail="makeWallet2"/>
-      <arc head="notifySeen1" kind="INPUT" tail="ShowQR1"/>
-      <arc head="Seen1" kind="OUTPUT" tail="txSeen"/>
-      <arc head="notifySeen1" kind="INPUT" mult-k="1.41806640625" tail="Seen1">
-        <point x="69.0" y="49.0"/>
-      </arc>
-      <arc head="Authorizing1" kind="OUTPUT" tail="notifySeen1"/>
-      <arc head="notifyAuthorized1" kind="INPUT" tail="Authorizing1"/>
-      <arc head="Authorized1" kind="OUTPUT" tail="txAuthorized"/>
-      <arc head="notifyAuthorized1" kind="INPUT" mult-k="1.0223632812499996" tail="Authorized1">
-        <point x="83.0" y="49.0"/>
-        <point x="83.0" y="50.12472546136844"/>
-      </arc>
-      <arc head="Dispensing1" kind="OUTPUT" tail="notifyAuthorized1"/>
-      <arc head="dispense1" kind="INPUT" tail="Dispensing1"/>
-      <arc head="confirmed1" kind="INPUT" mult-k="0.5877929687500001" tail="TxConfirmed">
-        <point x="104.0" y="49.5"/>
-      </arc>
-      <arc head="confirmed1" kind="INPUT" tail="AwaitingTxConform"/>
-      <arc head="AwaitingTxConform" kind="OUTPUT" tail="dispense1"/>
-      <arc head="stale1" kind="INPUT" tail="AwaitingTxConform"/>
-      <arc head="stale1" kind="INPUT" mult-k="1.4293945312499998" tail="TxStale">
-        <point x="107.0" y="46.0"/>
-      </arc>
-      <arc head="notifySeen2" kind="INPUT" tail="ShowQR2"/>
-      <arc head="Authorizing2" kind="OUTPUT" tail="notifySeen2"/>
-      <arc head="notifyAuthorized2" kind="INPUT" tail="Authorizing2"/>
-      <arc head="notifyAuthorized2" kind="INPUT" tail="Authorized1"/>
-      <arc head="ReadyForRedeem" kind="OUTPUT" tail="notifyAuthorized2"/>
-      <arc head="sendSMSCode" kind="INPUT" tail="ReadyForRedeem"/>
-      <arc head="EnterCode" kind="OUTPUT" tail="sendSMSCode"/>
-      <arc head="requestAmount" kind="INPUT" tail="CashOutStart"/>
-      <arc head="P7" kind="OUTPUT" tail="requestAmount"/>
-      <arc head="KYC" kind="INPUT" tail="P7"/>
-      <arc head="CashOut" kind="OUTPUT" tail="KYC"/>
-      <arc head="Trade2" kind="OUTPUT" tail="redeemDispense2"/>
-      <arc head="redeemAuthorized" kind="INPUT" tail="EnterCode"/>
-      <arc head="sendSMSCode" kind="INPUT" mult-k="1.34580078125" tail="TxConfirmed">
-        <point x="93.0" y="47.5"/>
-      </arc>
-      <arc head="redeemDispense2" kind="INPUT" tail="Dispensing2"/>
-      <arc head="Dispensing2" kind="OUTPUT" tail="redeemAuthorized"/>
-      <arc head="redeemStale" kind="INPUT" mult-k="0.60888671875" tail="ReadyForRedeem">
-        <point x="88.0" y="52.0"/>
-      </arc>
-      <arc head="redeemStale" kind="INPUT" tail="TxStale"/>
-      <arc head="Trade1" kind="OUTPUT" tail="confirmed1"/>
-      <arc head="tradeSuccess1" kind="INPUT" tail="Trade1"/>
-      <arc head="DispensedStale" kind="OUTPUT" tail="stale1"/>
-      <arc head="RedeemStale" kind="OUTPUT" tail="redeemStale"/>
-      <arc head="notifySeen2" kind="INPUT" tail="Seen1"/>
-      <arc head="DoneSuccess1" kind="OUTPUT" tail="tradeSuccess1"/>
-      <arc head="tradeSuccess2" kind="INPUT" tail="Trade2"/>
-      <arc head="DoneSuccess2" kind="OUTPUT" tail="tradeSuccess2"/>
-      <arc head="HasWallet" kind="OUTPUT" mult-k="1.0856445312499998" tail="makeWallet2">
-        <point x="53.0" y="42.0"/>
-      </arc>
-      <arc head="copy_txTimeout2" kind="INPUT" tail="copy_TxAuth"/>
-      <arc head="copy_txSeen" kind="INPUT" tail="copy_HasWallet"/>
-      <arc head="copy_TxSeen" kind="OUTPUT" tail="copy_txSeen"/>
-      <arc head="copy_txAuthorized" kind="INPUT" tail="copy_TxSeen"/>
-      <arc head="copy_TxAuth" kind="OUTPUT" tail="copy_txAuthorized"/>
-      <arc head="copy_txTimeout1" kind="INPUT" tail="copy_TxSeen"/>
-      <arc head="copy_TxStale" kind="OUTPUT" tail="copy_txTimeout1"/>
-      <arc head="copy_TxStale" kind="OUTPUT" tail="copy_txTimeout2"/>
-      <arc head="copy_txConfirmed" kind="INPUT" tail="copy_TxAuth"/>
-      <arc head="copy_TxConfirmed" kind="OUTPUT" tail="copy_txConfirmed"/>
-      <arc head="copy_txTimeout0" kind="INPUT" tail="copy_HasWallet"/>
-      <arc head="copy_TxStale" kind="OUTPUT" tail="copy_txTimeout0"/>
+      <arc head="seen" kind="INPUT" tail="AuthorizeCoins"/>
+      <arc head="authorized" kind="INPUT" tail="AuthorizeCoins"/>
+      <arc head="coinTimeout" kind="INPUT" tail="AuthorizeCoins"/>
+      <arc head="Seen" kind="OUTPUT" tail="seen"/>
+      <arc head="authorized2" kind="INPUT" tail="Seen"/>
+      <arc head="authTimeout" kind="INPUT" tail="Seen"/>
+      <arc head="Success" kind="OUTPUT" tail="authorized2"/>
+      <arc head="authorizeCoinsSuccess" kind="INPUT" tail="Success"/>
+      <arc head="Success" kind="OUTPUT" tail="authorized"/>
+      <arc head="NeedRedeem" kind="OUTPUT" tail="authTimeout"/>
+      <arc head="authorizeCoinsRedeem" kind="INPUT" tail="NeedRedeem"/>
+      <arc head="Abort" kind="OUTPUT" tail="coinTimeout"/>
+      <arc head="authorizeCoinsAbort" kind="INPUT" tail="Abort"/>
     </edges>
   </gspn>
-  <gspn name="CashOutRedeem" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
+  <gspn name="Redeem" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place label-y="-2.0" marking="1" name="CashOut" x="4.0" y="25.0"/>
-      <transition label-y="2.0" name="withRedeem" nservers-x="0.5" rotation="-0.0" type="EXP" x="8.05" y="25.0"/>
-      <place label-y="-2.0" name="ShowPhoneEntry" x="11.0" y="25.0"/>
-      <transition label-y="1.5" name="gotPhone" nservers-x="0.5" rotation="-0.0" type="EXP" x="14.55" y="25.0"/>
-      <place label-x="-1.5" label-y="-2.0" name="HasWallet" x="23.0" y="11.0"/>
-      <transition label-x="-2.5" label-y="-1.0" name="txSeen" nservers-x="0.5" type="EXP" x="31.55" y="11.0"/>
-      <transition label-x="0.5" name="txAuthorized" nservers-x="0.5" type="EXP" x="41.55" y="11.0"/>
-      <transition name="txConfirmed" nservers-x="0.5" type="EXP" x="56.55" y="11.0"/>
-      <place name="TxSeen" x="36.0" y="11.0"/>
-      <place name="TxAuth" x="51.5" y="11.0"/>
-      <place name="TxConfirmed" x="60.0" y="11.0"/>
-      <place name="TxStale" x="60.0" y="4.0"/>
-      <transition label-x="-3.0" label-y="-0.5" name="txTimeout2" nservers-x="0.5" type="EXP" x="54.55" y="8.0"/>
-      <transition name="txTimeout1" nservers-x="0.5" type="EXP" x="40.55" y="7.0"/>
-      <transition label-y="-2.0" name="txTimeout0" nservers-x="0.5" type="EXP" x="31.55" y="4.0"/>
-      <place name="P3" x="17.0" y="25.0"/>
-      <place label-y="-2.0" name="ShowQR2" x="27.0" y="25.0"/>
-      <transition name="makeWallet2" nservers-x="0.5" type="EXP" x="20.55" y="25.0"/>
-      <transition name="redeemStale" nservers-x="0.5" type="EXP" x="74.55" y="4.0"/>
-      <place label-x="2.5" label-y="0.0" name="Seen1" x="31.0" y="18.0"/>
-      <place label-y="-1.5" name="Authorized1" x="47.0" y="18.0"/>
-      <transition label-y="2.0" name="notifySeen2" nservers-x="0.5" type="EXP" x="31.55" y="25.0"/>
-      <place name="Authorizing2" x="42.0" y="25.0"/>
-      <transition name="notifyAuthorized2" nservers-x="0.5" type="EXP" x="47.55" y="25.0"/>
-      <transition label-x="0.5" label-y="-2.0" name="redeemDispense2" nservers-x="0.5" type="EXP" x="81.55" y="25.0"/>
-      <place name="ReadyForRedeem" x="55.0" y="25.0"/>
-      <transition name="sendSMSCode" nservers-x="0.5" type="EXP" x="60.55" y="25.0"/>
-      <place name="EnterCode" x="64.0" y="25.0"/>
-      <place name="Trade2" x="87.0" y="25.0"/>
-      <transition name="redeemAuthorized" nservers-x="0.5" type="EXP" x="68.55" y="25.0"/>
-      <place name="Dispensing2" x="76.0" y="25.0"/>
-      <place name="RedeemStale" x="97.0" y="4.0"/>
-      <transition name="tradeSuccess2" nservers-x="0.5" type="EXP" x="92.55" y="25.0"/>
-      <place name="DoneSuccess2" x="97.0" y="25.0"/>
-      <transition name="screenTimeout" nservers-x="0.5" type="EXP" x="56.55" y="32.0"/>
-      <place name="P0" x="61.0" y="32.0"/>
+      <place name="Redeem" x="3.0" y="6.0"/>
+      <transition name="enterSms" nservers-x="0.5" type="EXP" x="9.55" y="6.0"/>
+      <place name="Sms" x="14.0" y="6.0"/>
+      <transition name="handoff" nservers-x="0.5" type="EXP" x="30.55" y="6.0"/>
+      <transition name="staleTx" nservers-x="0.5" type="EXP" x="14.55" y="21.0"/>
+      <place name="Sms2" x="36.0" y="6.0"/>
+      <transition name="authorized" nservers-x="0.5" type="EXP" x="41.55" y="6.0"/>
+      <transition name="notAuthorized" nservers-x="0.5" type="EXP" x="41.55" y="12.0"/>
+      <transition name="notSeen" nservers-x="0.5" type="EXP" x="41.55" y="17.0"/>
+      <place name="Authorized" x="47.0" y="6.0"/>
+      <transition name="redeemSuccess" nservers-x="0.5" type="EXP" x="52.55" y="6.0"/>
+      <place name="Abort" x="48.0" y="21.0"/>
+      <transition name="redeemAbort" nservers-x="0.5" type="EXP" x="52.55" y="21.0"/>
+      <transition name="smsSuccess" nservers-x="0.5" type="EXP" x="19.55" y="6.0"/>
+      <place name="RecordedSms" x="24.0" y="6.0"/>
     </nodes>
     <edges>
-      <arc head="withRedeem" kind="INPUT" tail="CashOut"/>
-      <arc head="ShowPhoneEntry" kind="OUTPUT" tail="withRedeem"/>
-      <arc head="gotPhone" kind="INPUT" tail="ShowPhoneEntry"/>
-      <arc head="P3" kind="OUTPUT" tail="gotPhone"/>
-      <arc head="txTimeout2" kind="INPUT" tail="TxAuth"/>
-      <arc head="txSeen" kind="INPUT" tail="HasWallet"/>
-      <arc head="TxSeen" kind="OUTPUT" tail="txSeen"/>
-      <arc head="txAuthorized" kind="INPUT" tail="TxSeen"/>
-      <arc head="TxAuth" kind="OUTPUT" tail="txAuthorized"/>
-      <arc head="txTimeout1" kind="INPUT" tail="TxSeen"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout1"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout2"/>
-      <arc head="txConfirmed" kind="INPUT" tail="TxAuth"/>
-      <arc head="TxConfirmed" kind="OUTPUT" tail="txConfirmed"/>
-      <arc head="txTimeout0" kind="INPUT" tail="HasWallet"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout0"/>
-      <arc head="makeWallet2" kind="INPUT" tail="P3"/>
-      <arc head="ShowQR2" kind="OUTPUT" tail="makeWallet2"/>
-      <arc head="Seen1" kind="OUTPUT" tail="txSeen"/>
-      <arc head="Authorized1" kind="OUTPUT" tail="txAuthorized"/>
-      <arc head="notifySeen2" kind="INPUT" tail="ShowQR2"/>
-      <arc head="Authorizing2" kind="OUTPUT" tail="notifySeen2"/>
-      <arc head="notifyAuthorized2" kind="INPUT" tail="Authorizing2"/>
-      <arc head="notifyAuthorized2" kind="INPUT" tail="Authorized1"/>
-      <arc head="ReadyForRedeem" kind="OUTPUT" tail="notifyAuthorized2"/>
-      <arc head="sendSMSCode" kind="INPUT" tail="ReadyForRedeem"/>
-      <arc head="EnterCode" kind="OUTPUT" tail="sendSMSCode"/>
-      <arc head="Trade2" kind="OUTPUT" tail="redeemDispense2"/>
-      <arc head="redeemAuthorized" kind="INPUT" tail="EnterCode"/>
-      <arc head="sendSMSCode" kind="INPUT" mult-k="1.34580078125" tail="TxConfirmed">
-        <point x="61.0" y="17.5"/>
-      </arc>
-      <arc head="redeemDispense2" kind="INPUT" tail="Dispensing2"/>
-      <arc head="Dispensing2" kind="OUTPUT" tail="redeemAuthorized"/>
-      <arc head="redeemStale" kind="INPUT" mult-k="0.60888671875" tail="ReadyForRedeem">
-        <point x="56.0" y="22.0"/>
-      </arc>
-      <arc head="redeemStale" kind="INPUT" tail="TxStale"/>
-      <arc head="RedeemStale" kind="OUTPUT" tail="redeemStale"/>
-      <arc head="notifySeen2" kind="INPUT" tail="Seen1"/>
-      <arc head="tradeSuccess2" kind="INPUT" tail="Trade2"/>
-      <arc head="DoneSuccess2" kind="OUTPUT" tail="tradeSuccess2"/>
-      <arc head="HasWallet" kind="OUTPUT" mult-k="1.0856445312499998" tail="makeWallet2">
-        <point x="21.0" y="12.0"/>
-      </arc>
-      <arc head="screenTimeout" kind="INPUT" tail="ReadyForRedeem"/>
-      <arc head="P0" kind="OUTPUT" tail="screenTimeout"/>
-    </edges>
-  </gspn>
-  <gspn name="CashOutFash" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
-    <nodes>
-      <place label-y="-2.0" marking="1" name="CashOut" x="8.0" y="30.0"/>
-      <place label-x="0.5" label-y="-1.5" name="ShowQR1" x="20.0" y="30.0"/>
-      <transition name="makeWallet1" nservers-x="0.5" type="EXP" x="14.55" y="30.0"/>
-      <place label-x="-1.5" label-y="-2.0" name="HasWallet" x="14.0" y="14.0"/>
-      <transition label-x="-2.5" label-y="-1.0" name="txSeen" nservers-x="0.5" type="EXP" x="24.55" y="14.0"/>
-      <transition label-x="0.5" name="txAuthorized" nservers-x="0.5" type="EXP" x="34.55" y="14.0"/>
-      <transition name="txConfirmed" nservers-x="0.5" type="EXP" x="49.55" y="14.0"/>
-      <place name="TxSeen" x="29.0" y="14.0"/>
-      <place name="TxAuth" x="44.5" y="14.0"/>
-      <place name="TxConfirmed" x="53.0" y="14.0"/>
-      <place name="TxStale" x="53.0" y="7.0"/>
-      <transition label-x="-3.0" label-y="-0.5" name="txTimeout2" nservers-x="0.5" type="EXP" x="47.55" y="11.0"/>
-      <transition name="txTimeout1" nservers-x="0.5" type="EXP" x="33.55" y="10.0"/>
-      <transition label-y="-2.0" name="txTimeout0" nservers-x="0.5" type="EXP" x="24.55" y="7.0"/>
-      <transition label-y="2.0" name="notifySeen1" nservers-x="0.5" type="EXP" x="29.55" y="30.0"/>
-      <transition name="redeemStale" nservers-x="0.5" type="EXP" x="67.55" y="7.0"/>
-      <place label-y="-1.5" name="Authorizing1" x="35.0" y="30.0"/>
-      <transition name="dispense1" nservers-x="0.5" type="EXP" x="53.55" y="30.0"/>
-      <place label-x="2.5" label-y="0.0" name="Seen1" x="24.0" y="21.0"/>
-      <transition label-y="2.0" name="notifyAuthorized1" nservers-x="0.5" type="EXP" x="43.55" y="30.0"/>
-      <place label-x="4.0" label-y="0.0" name="Authorized1" x="34.0" y="21.0"/>
-      <place label-y="-1.5" name="Dispensing1" x="48.0" y="30.0"/>
-      <place label-y="2.5" name="AwaitingTxConform" x="58.0" y="30.0"/>
-      <transition name="confirmed1" nservers-x="0.5" type="EXP" x="64.55" y="30.0"/>
-      <transition name="stale1" nservers-x="0.5" type="EXP" x="67.55" y="36.0"/>
-      <place name="Trade1" x="80.0" y="30.0"/>
-      <transition name="tradeSuccess1" nservers-x="0.5" type="EXP" x="85.55" y="30.0"/>
-      <place name="DispensedStale" x="90.0" y="36.0"/>
-      <place name="RedeemStale" x="90.0" y="7.0"/>
-      <place name="DoneSuccess1" x="90.0" y="30.0"/>
-    </nodes>
-    <edges>
-      <arc head="ShowQR1" kind="OUTPUT" tail="makeWallet1"/>
-      <arc head="txTimeout2" kind="INPUT" tail="TxAuth"/>
-      <arc head="txSeen" kind="INPUT" tail="HasWallet"/>
-      <arc head="TxSeen" kind="OUTPUT" tail="txSeen"/>
-      <arc head="txAuthorized" kind="INPUT" tail="TxSeen"/>
-      <arc head="TxAuth" kind="OUTPUT" tail="txAuthorized"/>
-      <arc head="txTimeout1" kind="INPUT" tail="TxSeen"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout1"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout2"/>
-      <arc head="txConfirmed" kind="INPUT" tail="TxAuth"/>
-      <arc head="TxConfirmed" kind="OUTPUT" tail="txConfirmed"/>
-      <arc head="HasWallet" kind="OUTPUT" tail="makeWallet1"/>
-      <arc head="txTimeout0" kind="INPUT" tail="HasWallet"/>
-      <arc head="TxStale" kind="OUTPUT" tail="txTimeout0"/>
-      <arc head="notifySeen1" kind="INPUT" tail="ShowQR1"/>
-      <arc head="Seen1" kind="OUTPUT" tail="txSeen"/>
-      <arc head="notifySeen1" kind="INPUT" mult-k="1.41806640625" tail="Seen1">
-        <point x="25.0" y="26.5"/>
-      </arc>
-      <arc head="Authorizing1" kind="OUTPUT" tail="notifySeen1"/>
-      <arc head="notifyAuthorized1" kind="INPUT" tail="Authorizing1"/>
-      <arc head="Authorized1" kind="OUTPUT" tail="txAuthorized"/>
-      <arc head="Dispensing1" kind="OUTPUT" tail="notifyAuthorized1"/>
-      <arc head="dispense1" kind="INPUT" tail="Dispensing1"/>
-      <arc head="confirmed1" kind="INPUT" mult-k="0.5877929687500001" tail="TxConfirmed">
-        <point x="65.0" y="22.5"/>
-      </arc>
-      <arc head="confirmed1" kind="INPUT" tail="AwaitingTxConform"/>
-      <arc head="AwaitingTxConform" kind="OUTPUT" tail="dispense1"/>
-      <arc head="stale1" kind="INPUT" tail="AwaitingTxConform"/>
-      <arc head="stale1" kind="INPUT" mult-k="1.4293945312499998" tail="TxStale">
-        <point x="68.0" y="11.0"/>
-      </arc>
-      <arc head="redeemStale" kind="INPUT" tail="TxStale"/>
-      <arc head="Trade1" kind="OUTPUT" tail="confirmed1"/>
-      <arc head="tradeSuccess1" kind="INPUT" tail="Trade1"/>
-      <arc head="DispensedStale" kind="OUTPUT" tail="stale1"/>
-      <arc head="RedeemStale" kind="OUTPUT" tail="redeemStale"/>
-      <arc head="DoneSuccess1" kind="OUTPUT" tail="tradeSuccess1"/>
-      <arc head="makeWallet1" kind="INPUT" tail="CashOut"/>
-      <arc head="notifyAuthorized1" kind="INPUT" tail="Authorized1">
-        <point x="35.0" y="26.0"/>
-      </arc>
+      <arc head="enterSms" kind="INPUT" tail="Redeem"/>
+      <arc head="Sms" kind="OUTPUT" tail="enterSms"/>
+      <arc head="Sms2" kind="OUTPUT" tail="handoff"/>
+      <arc head="Authorized" kind="OUTPUT" tail="authorized"/>
+      <arc head="redeemSuccess" kind="INPUT" tail="Authorized"/>
+      <arc head="staleTx" kind="INPUT" tail="Sms"/>
+      <arc head="Abort" kind="OUTPUT" tail="staleTx"/>
+      <arc head="redeemAbort" kind="INPUT" tail="Abort"/>
+      <arc head="Abort" kind="OUTPUT" tail="notAuthorized"/>
+      <arc head="Abort" kind="OUTPUT" tail="notSeen"/>
+      <arc head="smsSuccess" kind="INPUT" tail="Sms"/>
+      <arc head="RecordedSms" kind="OUTPUT" tail="smsSuccess"/>
+      <arc head="handoff" kind="INPUT" tail="RecordedSms"/>
     </edges>
   </gspn>
   <gspn name="TxStart" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
