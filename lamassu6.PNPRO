@@ -56,7 +56,6 @@
       <place name="AcquireAddress" superposition-tags="AcquireAddress" x="18.0" y="17.0"/>
       <transition name="acquireAddressSuccess" nservers-x="0.5" superposition-tags="AcquireAddress" type="EXP" x="25.55" y="17.0"/>
       <transition name="acquireAddressAbort" nservers-x="0.5" superposition-tags="AcquireAddress" type="EXP" x="18.55" y="28.0"/>
-      <transition name="acquireAddressMaintenance" nservers-x="0.5" superposition-tags="AcquireAddress" type="EXP" x="30.55" y="25.0"/>
       <place name="HasAddress" x="33.0" y="17.0"/>
       <place name="SendCoins" superposition-tags="SendCoins" x="84.0" y="17.0"/>
       <transition name="sendCoinsDone" nservers-x="0.5" superposition-tags="SendCoins" type="EXP" x="84.55" y="35.0"/>
@@ -84,29 +83,60 @@
       <arc head="HasAddress" kind="OUTPUT" tail="acquireAddressSuccess"/>
       <arc head="startSession" kind="INPUT" tail="HasAddress"/>
       <arc head="acquireAddressAbort" kind="INPUT" tail="AcquireAddress"/>
-      <arc head="acquireAddressMaintenance" kind="INPUT" tail="AcquireAddress"/>
       <arc head="Done" kind="OUTPUT" tail="acquireAddressAbort"/>
-      <arc head="Maintenance" kind="OUTPUT" tail="acquireAddressMaintenance"/>
       <arc head="SendCoins" kind="OUTPUT" tail="cashInAdditionalSuccess"/>
       <arc head="sendCoinsDone" kind="INPUT" tail="SendCoins"/>
       <arc head="Done" kind="OUTPUT" tail="sendCoinsDone"/>
     </edges>
   </gspn>
-  <gspn name="PrintWallet" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
+  <gspn name="PrintWallet" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="PrintWallet" superposition-tags="initial" x="2.0" y="12.0"/>
-      <transition name="printWalletSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="8.55" y="6.0"/>
-      <transition name="timeout_60s" nservers-x="0.5" type="EXP" x="8.55" y="12.0"/>
-      <place name="Abort" x="16.0" y="12.0"/>
-      <transition name="printWalletAbort" nservers-x="0.5" type="EXP" x="22.55" y="12.0"/>
-      <transition name="printWalletMaintenance" nservers-x="0.5" superposition-tags="printer" type="EXP" x="8.55" y="20.0"/>
+      <place label-y="-3.0" marking="1" name="PrintWallet" superpos-y="-2.0" superposition-tags="initial" x="2.0" y="14.0"/>
+      <transition name="printSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="9.55" y="5.0"/>
+      <transition name="printerErrorTimeout_30s" nservers-x="0.5" type="EXP" x="29.55" y="19.0"/>
+      <place label-y="-2.5" name="Abort" x="39.0" y="16.0"/>
+      <transition label-y="-3.0" name="printWalletAbort" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="45.55" y="16.0"/>
+      <transition label-x="-0.5" label-y="2.0" name="printError" nservers-x="0.5" type="EXP" x="9.55" y="22.0"/>
+      <place label-y="-2.0" name="ScanPrintedWallet" x="17.0" y="5.0"/>
+      <transition label-y="-3.0" name="printWalletSuccess" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="45.55" y="5.0"/>
+      <transition label-x="3.0" label-y="1.0" name="scanError" nservers-x="0.5" rotation="4.71238898038469" type="EXP" x="17.55" y="9.0"/>
+      <place label-x="1.5" label-y="2.0" name="PrintWalletScanError" x="17.0" y="12.0"/>
+      <place name="PrinterError" x="17.0" y="22.0"/>
+      <transition label-y="-2.0" name="scanAbort" nservers-x="0.5" rotation="-0.0" type="EXP" x="29.55" y="10.0"/>
+      <transition label-x="-1.0" name="scanAgain" nservers-x="0.5" rotation="4.71238898038469" type="EXP" x="13.55" y="9.0"/>
+      <transition label-x="-0.5" name="tryAgain" nservers-x="0.5" type="EXP" x="9.55" y="16.0"/>
+      <transition name="printAgain" nservers-x="0.5" type="EXP" x="9.55" y="12.0"/>
+      <transition name="printerErrorAbort" nservers-x="0.5" type="EXP" x="29.55" y="22.0"/>
+      <transition name="scanTimeout_30s" nservers-x="0.5" type="EXP" x="29.55" y="13.0"/>
+      <transition name="scanErrorTimeout_30s" nservers-x="0.5" type="EXP" x="29.55" y="16.0"/>
     </nodes>
     <edges>
-      <arc head="timeout_60s" kind="INPUT" tail="PrintWallet"/>
-      <arc head="printWalletSuccess" kind="INPUT" tail="PrintWallet"/>
-      <arc head="printWalletMaintenance" kind="INPUT" tail="PrintWallet"/>
-      <arc head="Abort" kind="OUTPUT" tail="timeout_60s"/>
+      <arc head="printSuccess" kind="INPUT" tail="PrintWallet"/>
+      <arc head="printError" kind="INPUT" mult-k="0.53134765625" tail="PrintWallet"/>
+      <arc head="Abort" kind="OUTPUT" tail="printerErrorTimeout_30s"/>
+      <arc head="ScanPrintedWallet" kind="OUTPUT" tail="printSuccess"/>
+      <arc head="scanError" kind="INPUT" tail="ScanPrintedWallet"/>
+      <arc head="PrintWalletScanError" kind="OUTPUT" tail="scanError"/>
+      <arc head="Abort" kind="OUTPUT" tail="scanAbort"/>
+      <arc head="scanAgain" kind="INPUT" tail="PrintWalletScanError"/>
+      <arc head="ScanPrintedWallet" kind="OUTPUT" tail="scanAgain"/>
+      <arc head="PrinterError" kind="OUTPUT" tail="printError"/>
+      <arc head="printAgain" kind="INPUT" tail="PrintWalletScanError"/>
+      <arc head="printerErrorAbort" kind="INPUT" tail="PrinterError"/>
+      <arc head="Abort" kind="OUTPUT" tail="printerErrorAbort"/>
+      <arc head="Abort" kind="OUTPUT" tail="scanTimeout_30s"/>
+      <arc head="PrintWallet" kind="OUTPUT" tail="printAgain"/>
+      <arc head="Abort" kind="OUTPUT" tail="scanErrorTimeout_30s"/>
+      <arc head="PrintWallet" kind="OUTPUT" tail="tryAgain"/>
       <arc head="printWalletAbort" kind="INPUT" tail="Abort"/>
+      <arc head="tryAgain" kind="INPUT" tail="PrinterError">
+        <point x="18.0" y="17.0"/>
+      </arc>
+      <arc head="printWalletSuccess" kind="INPUT" tail="ScanPrintedWallet"/>
+      <arc head="printerErrorTimeout_30s" kind="INPUT" tail="PrinterError"/>
+      <arc head="scanErrorTimeout_30s" kind="INPUT" tail="PrintWalletScanError"/>
+      <arc head="scanTimeout_30s" kind="INPUT" tail="ScanPrintedWallet"/>
+      <arc head="scanAbort" kind="INPUT" tail="ScanPrintedWallet"/>
     </edges>
   </gspn>
   <gspn name="AcquireAddress" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
@@ -126,11 +156,8 @@
       <place name="PrintWallet" superposition-tags="PrintWallet" x="27.0" y="8.0"/>
       <transition name="printWalletSuccess" nservers-x="0.5" superposition-tags="PrintWallet" type="EXP" x="27.55" y="17.0"/>
       <transition name="printWalletAbort" nservers-x="0.5" superposition-tags="PrintWallet" type="EXP" x="51.55" y="27.0"/>
-      <transition name="printWalletMaintenance" nservers-x="0.5" superposition-tags="PrintWallet" type="EXP" x="37.55" y="8.0"/>
       <place name="Abort" x="40.0" y="42.0"/>
       <transition name="acquireAddressSuccess" nservers-x="0.5" type="EXP" x="39.55" y="27.0"/>
-      <place name="Maintenance" x="45.0" y="8.0"/>
-      <transition name="acquireAddressMaintenance" nservers-x="0.5" type="EXP" x="54.55" y="8.0"/>
       <transition name="acquireAddressAbort" nservers-x="0.5" type="EXP" x="40.55" y="50.0"/>
     </nodes>
     <edges>
@@ -149,12 +176,9 @@
       <arc head="printWalletSuccess" kind="INPUT" tail="PrintWallet"/>
       <arc head="HasAddress" kind="OUTPUT" tail="printWalletSuccess"/>
       <arc head="printWalletAbort" kind="INPUT" tail="PrintWallet"/>
-      <arc head="printWalletMaintenance" kind="INPUT" tail="PrintWallet"/>
       <arc head="Abort" kind="OUTPUT" tail="scanTimeout"/>
       <arc head="Abort" kind="OUTPUT" tail="scanCancel"/>
       <arc head="acquireAddressSuccess" kind="INPUT" tail="HasAddress"/>
-      <arc head="Maintenance" kind="OUTPUT" tail="printWalletMaintenance"/>
-      <arc head="acquireAddressMaintenance" kind="INPUT" tail="Maintenance"/>
       <arc head="Abort" kind="OUTPUT" tail="badAddressTimeout"/>
       <arc head="Abort" kind="OUTPUT" tail="badAddressConfirm">
         <point x="37.5" y="43.0"/>
