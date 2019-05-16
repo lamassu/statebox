@@ -15,6 +15,7 @@
       <transition name="cashInMaintenance" nservers-x="0.5" type="EXP" x="42.55" y="9.0"/>
       <place name="Maintenance" superposition-tags="screen" x="50.0" y="4.0"/>
       <transition name="fixMaintenance" nservers-x="0.5" superposition-tags="machine" type="EXP" x="26.55" y="4.0"/>
+      <transition name="timeout" nservers-x="0.5" type="EXP" x="18.55" y="12.0"/>
     </nodes>
     <edges>
       <arc head="cashOut" kind="INPUT" tail="Transaction"/>
@@ -731,7 +732,7 @@
   </gspn>
   <gspn name="TxStart" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <transition name="termsAndConditions" nservers-x="0.5" type="EXP" x="11.55" y="15.0"/>
+      <transition name="termsAndConditions" nservers-x="0.5" superposition-tags="machine" type="EXP" x="11.55" y="15.0"/>
       <place name="TermsAndConditions" superposition-tags="screen" x="18.0" y="15.0"/>
       <transition name="acceptTerms" nservers-x="0.5" superposition-tags="user" type="EXP" x="24.55" y="15.0"/>
       <transition name="rejectTerms" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="30.0"/>
