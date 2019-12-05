@@ -851,10 +851,10 @@
       <transition name="startTimeout" nservers-x="0.5" superposition-tags="timeout,user" type="EXP" x="25.55" y="26.0"/>
       <place name="SmsHasPhone" superposition-tags="SmsHasPhone" x="35.0" y="36.0"/>
       <transition name="smsHasPhoneSuccess" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="48.55" y="36.0"/>
-      <transition name="smsHasPhoneRestart" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="57.55" y="26.0"/>
+      <transition name="smsHasPhoneRetry" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="57.55" y="26.0"/>
       <transition name="smsHasPhoneBadNumber" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="43.55" y="26.0"/>
-      <place name="SmsRestart" x="43.0" y="12.0"/>
-      <transition name="smsRestart" nservers-x="0.5" type="EXP" x="61.55" y="12.0"/>
+      <place name="SmsRetry" x="43.0" y="12.0"/>
+      <transition name="smsRetry" nservers-x="0.5" type="EXP" x="61.55" y="12.0"/>
       <transition name="smsHasPhoneAbort" nservers-x="0.5" type="EXP" x="32.55" y="26.0"/>
       <place name="SmsSuccess" x="55.0" y="36.0"/>
       <transition name="smsSuccess" nservers-x="0.5" type="EXP" x="61.55" y="36.0"/>
@@ -868,11 +868,11 @@
       <arc head="Abort" kind="OUTPUT" tail="startTimeout"/>
       <arc head="SmsHasPhone" kind="OUTPUT" tail="inputPhone"/>
       <arc head="smsHasPhoneBadNumber" kind="INPUT" tail="SmsHasPhone"/>
-      <arc head="smsHasPhoneRestart" kind="INPUT" tail="SmsHasPhone"/>
+      <arc head="smsHasPhoneRetry" kind="INPUT" tail="SmsHasPhone"/>
       <arc head="smsHasPhoneSuccess" kind="INPUT" tail="SmsHasPhone"/>
-      <arc head="SmsRestart" kind="OUTPUT" tail="smsHasPhoneBadNumber"/>
-      <arc head="SmsRestart" kind="OUTPUT" tail="smsHasPhoneRestart"/>
-      <arc head="smsRestart" kind="INPUT" tail="SmsRestart"/>
+      <arc head="SmsRetry" kind="OUTPUT" tail="smsHasPhoneBadNumber"/>
+      <arc head="SmsRetry" kind="OUTPUT" tail="smsHasPhoneRetry"/>
+      <arc head="smsRetry" kind="INPUT" tail="SmsRetry"/>
       <arc head="smsHasPhoneAbort" kind="INPUT" tail="SmsHasPhone"/>
       <arc head="SmsSuccess" kind="OUTPUT" tail="smsHasPhoneSuccess"/>
       <arc head="smsSuccess" kind="INPUT" tail="SmsSuccess"/>
@@ -885,12 +885,12 @@
       <transition name="sendSms" nservers-x="0.5" superposition-tags="machine" type="EXP" x="11.55" y="20.0"/>
       <place name="CheckCode" superposition-tags="screen" x="61.0" y="20.0"/>
       <transition name="goodCode" nservers-x="0.5" superposition-tags="machine" type="EXP" x="69.55" y="20.0"/>
-      <transition name="badCode" nservers-x="0.5" superposition-tags="machine" type="EXP" x="61.55" y="28.0"/>
+      <transition name="badCode" nservers-x="0.5" superposition-tags="machine" type="EXP" x="64.55" y="28.0"/>
       <place name="Abort" x="50.0" y="42.0"/>
       <transition name="smsHasPhoneAbort" nservers-x="0.5" type="EXP" x="69.55" y="42.0"/>
       <place name="ChooseTryAgain" superposition-tags="screen" x="61.0" y="34.0"/>
       <transition name="noTryAgain" nservers-x="0.5" superposition-tags="user" type="EXP" x="50.55" y="34.0"/>
-      <transition name="smsHasPhoneRestart" nservers-x="0.5" superposition-tags="user" type="EXP" x="69.55" y="34.0"/>
+      <transition name="smsHasPhoneRetry" nservers-x="0.5" superposition-tags="user" type="EXP" x="69.55" y="34.0"/>
       <place name="Complete" superposition-tags="screen" x="77.0" y="20.0"/>
       <transition name="smsHasPhoneSuccess" nservers-x="0.5" type="EXP" x="84.55" y="20.0"/>
       <transition name="receiveCode" nservers-x="0.5" superposition-tags="server" type="EXP" x="28.55" y="20.0"/>
@@ -898,16 +898,12 @@
       <transition name="receiveCodeTimeout" nservers-x="0.5" superposition-tags="timeout_90s" type="EXP" x="20.55" y="42.0"/>
       <transition name="receiveCodeError" nservers-x="0.5" superposition-tags="server" type="EXP" x="27.55" y="36.0"/>
       <transition name="smsHandleCodeSuccess" nservers-x="0.5" superposition-tags="SmsHandleCode" type="EXP" x="51.55" y="20.0"/>
-      <transition name="smsHandleCodeCancel" nservers-x="0.5" superposition-tags="SmsHandleCode" type="EXP" x="34.55" y="15.0"/>
-      <transition name="smsHandleCodeNoCode" nservers-x="0.5" superposition-tags="SmsHandleCode" type="EXP" x="45.55" y="15.0"/>
+      <transition name="smsHandleCodeCancel" nservers-x="0.5" superposition-tags="SmsHandleCode" type="EXP" x="45.55" y="29.0"/>
+      <transition name="smsHandleCodeNoCode" nservers-x="0.5" superposition-tags="SmsHandleCode" type="EXP" x="55.55" y="28.0"/>
       <place name="SmsHandleCode" superposition-tags="SmsHandleCode" x="40.0" y="20.0"/>
       <transition name="badPhoneNumber" nservers-x="0.5" superposition-tags="server" type="EXP" x="20.55" y="15.0"/>
       <place name="ReceiveCodeError" superposition-tags="screen" x="38.0" y="36.0"/>
       <transition name="ok" nservers-x="0.5" superposition-tags="user" type="EXP" x="44.55" y="36.0"/>
-      <place name="Cancel" x="34.0" y="9.0"/>
-      <place name="NoCode" x="45.0" y="9.0"/>
-      <transition name="smsHasPhoneCancel" nservers-x="0.5" type="EXP" x="34.55" y="5.0"/>
-      <transition name="smsHasPhoneNoCode" nservers-x="0.5" type="EXP" x="45.55" y="5.0"/>
       <place name="BadPhoneNumber" x="20.0" y="9.0"/>
       <transition name="smsHasPhoneBadNumber" nservers-x="0.5" type="EXP" x="20.55" y="5.0"/>
     </nodes>
@@ -918,7 +914,7 @@
       <arc head="smsHasPhoneAbort" kind="INPUT" tail="Abort"/>
       <arc head="noTryAgain" kind="INPUT" tail="ChooseTryAgain"/>
       <arc head="Abort" kind="OUTPUT" tail="noTryAgain"/>
-      <arc head="smsHasPhoneRestart" kind="INPUT" tail="ChooseTryAgain"/>
+      <arc head="smsHasPhoneRetry" kind="INPUT" tail="ChooseTryAgain"/>
       <arc head="ChooseTryAgain" kind="OUTPUT" tail="badCode"/>
       <arc head="Complete" kind="OUTPUT" tail="goodCode"/>
       <arc head="smsHasPhoneSuccess" kind="INPUT" tail="Complete"/>
@@ -936,12 +932,10 @@
       <arc head="smsHandleCodeNoCode" kind="INPUT" tail="SmsHandleCode"/>
       <arc head="ok" kind="INPUT" tail="ReceiveCodeError"/>
       <arc head="Abort" kind="OUTPUT" tail="ok"/>
-      <arc head="Cancel" kind="OUTPUT" tail="smsHandleCodeCancel"/>
-      <arc head="NoCode" kind="OUTPUT" tail="smsHandleCodeNoCode"/>
-      <arc head="smsHasPhoneCancel" kind="INPUT" tail="Cancel"/>
-      <arc head="smsHasPhoneNoCode" kind="INPUT" tail="NoCode"/>
       <arc head="BadPhoneNumber" kind="OUTPUT" tail="badPhoneNumber"/>
       <arc head="smsHasPhoneBadNumber" kind="INPUT" tail="BadPhoneNumber"/>
+      <arc head="Abort" kind="OUTPUT" tail="smsHandleCodeCancel"/>
+      <arc head="ChooseTryAgain" kind="OUTPUT" tail="smsHandleCodeNoCode"/>
     </edges>
   </gspn>
   <gspn name="SmsHandleCode" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
