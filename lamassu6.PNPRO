@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="Lamassu6" version="121">
-  <gspn name="Transaction" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+  <gspn name="Home" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="Transaction" superposition-tags="initial,screen,root" x="16.0" y="21.0"/>
+      <place marking="1" name="Home" superposition-tags="initial,screen,root" x="8.0" y="28.0"/>
       <transition name="cashOut" nservers-x="0.5" superposition-tags="user" type="EXP" x="27.55" y="23.0"/>
       <transition name="cashIn" nservers-x="0.5" superposition-tags="user" type="EXP" x="27.55" y="13.0"/>
       <transition name="redeem" nservers-x="0.5" superposition-tags="user" type="EXP" x="27.55" y="28.0"/>
-      <transition name="changeLanguage" nservers-x="0.5" superposition-tags="user" type="EXP" x="10.55" y="12.0"/>
-      <transition name="changeCoin" nservers-x="0.5" type="EXP" x="6.55" y="21.0"/>
+      <transition name="changeLanguage" nservers-x="0.5" superposition-tags="user" type="EXP" x="17.55" y="13.0"/>
+      <transition name="changeCoin" nservers-x="0.5" type="EXP" x="8.55" y="13.0"/>
       <place name="CashIn" superposition-tags="CashIn" x="36.0" y="13.0"/>
       <place name="CashOut" superposition-tags="CashOut" x="36.0" y="23.0"/>
       <place name="Redeem" superposition-tags="Redeem" x="36.0" y="28.0"/>
       <transition name="cashInDone" nservers-x="0.5" superposition-tags="CashIn" type="EXP" x="50.55" y="13.0"/>
       <transition name="cashInMaintenance" nservers-x="0.5" superposition-tags="CashIn" type="EXP" x="36.55" y="9.0"/>
-      <transition name="timeout" nservers-x="0.5" type="EXP" x="18.55" y="12.0"/>
       <transition name="cashOutDone" nservers-x="0.5" superposition-tags="CashOut" type="EXP" x="50.55" y="18.0"/>
       <transition name="cashOutMaintenance" nservers-x="0.5" superposition-tags="CashOut" type="EXP" x="50.55" y="23.0"/>
       <transition name="redeemDone" nservers-x="0.5" superposition-tags="Redeem" type="EXP" x="50.55" y="28.0"/>
       <transition name="redeemMaintenance" nservers-x="0.5" superposition-tags="Redeem" type="EXP" x="50.55" y="34.0"/>
     </nodes>
     <edges>
-      <arc head="cashOut" kind="INPUT" tail="Transaction"/>
-      <arc head="redeem" kind="INPUT" tail="Transaction"/>
-      <arc head="cashIn" kind="INPUT" tail="Transaction"/>
-      <arc head="changeLanguage" kind="INPUT" tail="Transaction"/>
-      <arc head="Transaction" kind="OUTPUT" tail="changeLanguage"/>
-      <arc head="changeCoin" kind="INPUT" tail="Transaction"/>
-      <arc head="Transaction" kind="OUTPUT" tail="changeCoin"/>
+      <arc head="cashOut" kind="INPUT" tail="Home"/>
+      <arc head="redeem" kind="INPUT" tail="Home"/>
+      <arc head="cashIn" kind="INPUT" tail="Home"/>
+      <arc head="changeLanguage" kind="INPUT" tail="Home"/>
+      <arc head="changeCoin" kind="INPUT" tail="Home"/>
       <arc head="CashIn" kind="OUTPUT" tail="cashIn"/>
       <arc head="Redeem" kind="OUTPUT" tail="redeem"/>
       <arc head="CashOut" kind="OUTPUT" tail="cashOut"/>
@@ -99,28 +96,37 @@
   </gspn>
   <gspn name="PrintWallet" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place label-y="-3.0" marking="1" name="PrintWallet" superpos-y="-2.0" superposition-tags="initial" x="2.0" y="14.0"/>
-      <transition name="printSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="9.55" y="5.0"/>
-      <transition name="printerErrorTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="29.55" y="19.0"/>
-      <place label-y="-2.5" name="Abort" x="39.0" y="16.0"/>
-      <transition label-y="-3.0" name="printWalletAbort" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="45.55" y="16.0"/>
-      <transition label-x="-0.5" label-y="2.0" name="printError" nservers-x="0.5" type="EXP" x="9.55" y="22.0"/>
-      <place label-y="-2.0" name="ScanPrintedWallet" x="17.0" y="5.0"/>
-      <transition label-y="-3.0" name="printWalletSuccess" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="45.55" y="5.0"/>
-      <transition label-x="3.0" label-y="1.0" name="scanError" nservers-x="0.5" rotation="4.71238898038469" type="EXP" x="17.55" y="9.0"/>
-      <place label-x="1.5" label-y="2.0" name="PrintWalletScanError" x="17.0" y="12.0"/>
-      <place name="PrinterError" x="17.0" y="22.0"/>
-      <transition label-y="-2.0" name="scanAbort" nservers-x="0.5" rotation="-0.0" type="EXP" x="29.55" y="10.0"/>
-      <transition label-x="-1.0" name="scanAgain" nservers-x="0.5" rotation="4.71238898038469" type="EXP" x="13.55" y="9.0"/>
-      <transition label-x="-0.5" name="tryAgain" nservers-x="0.5" type="EXP" x="9.55" y="16.0"/>
-      <transition name="printAgain" nservers-x="0.5" type="EXP" x="9.55" y="12.0"/>
-      <transition name="printerErrorAbort" nservers-x="0.5" type="EXP" x="29.55" y="22.0"/>
-      <transition name="scanTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="29.55" y="13.0"/>
-      <transition name="scanErrorTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="29.55" y="16.0"/>
+      <place label-y="-3.0" marking="1" name="PrintWallet" superpos-y="-2.0" superposition-tags="initial" x="5.0" y="13.0"/>
+      <transition name="printSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="21.55" y="4.0"/>
+      <transition name="printerErrorTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="41.55" y="24.0"/>
+      <place label-y="-2.5" name="Abort" x="51.0" y="15.0"/>
+      <transition label-y="-3.0" name="printWalletAbort" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="57.55" y="15.0"/>
+      <transition label-x="-0.5" label-y="2.0" name="printError" nservers-x="0.5" superpos-x="-0.5" superpos-y="3.0" superposition-tags="machine" type="EXP" x="21.55" y="21.0"/>
+      <place label-y="-2.0" name="ScanPrintedWallet" x="29.0" y="4.0"/>
+      <transition label-y="-3.0" name="printWalletSuccess" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="57.55" y="4.0"/>
+      <transition label-x="3.0" label-y="1.0" name="scanError" nservers-x="0.5" rotation="4.71238898038469" type="EXP" x="29.55" y="8.0"/>
+      <place label-x="1.5" label-y="2.0" name="PrintWalletScanError" x="29.0" y="13.0"/>
+      <place name="PrinterError" x="29.0" y="21.0"/>
+      <transition label-y="-2.0" name="scanAbort" nservers-x="0.5" rotation="-0.0" superposition-tags="user" type="EXP" x="41.55" y="8.0"/>
+      <transition label-x="-1.0" name="scanAgain" nservers-x="0.5" rotation="4.71238898038469" superposition-tags="loop_3" type="EXP" x="25.55" y="8.0"/>
+      <transition label-x="-0.5" name="tryAgain" nservers-x="0.5" superposition-tags="user" type="EXP" x="21.55" y="18.0"/>
+      <transition name="printAgain" nservers-x="0.5" superposition-tags="user" type="EXP" x="22.55" y="13.0"/>
+      <transition name="printerErrorAbort" nservers-x="0.5" superposition-tags="user" type="EXP" x="41.55" y="30.0"/>
+      <transition name="scanTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="41.55" y="13.0"/>
+      <transition name="scanErrorTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="41.55" y="18.0"/>
+      <place name="PrintLoop" x="15.0" y="13.0"/>
+      <transition name="printLoop" nservers-x="0.5" superposition-tags="loop_3" type="EXP" x="10.55" y="13.0"/>
+      <transition name="abortLoop" nservers-x="0.5" superposition-tags="abort" type="EXP" x="15.55" y="8.0"/>
+      <place name="TooManyRetries" superposition-tags="screen" x="51.0" y="29.0"/>
+      <transition name="tooManyRetries" nservers-x="0.5" type="EXP" x="51.55" y="23.0"/>
     </nodes>
     <edges>
-      <arc head="printSuccess" kind="INPUT" tail="PrintWallet"/>
-      <arc head="printError" kind="INPUT" mult-k="0.53134765625" tail="PrintWallet"/>
+      <arc head="printSuccess" kind="INPUT" mult-k="0.93271484375" tail="PrintWallet">
+        <point x="6.0" y="5.0"/>
+      </arc>
+      <arc head="printError" kind="INPUT" mult-k="0.73388671875" tail="PrintWallet">
+        <point x="6.0" y="22.0"/>
+      </arc>
       <arc head="Abort" kind="OUTPUT" tail="printerErrorTimeout"/>
       <arc head="ScanPrintedWallet" kind="OUTPUT" tail="printSuccess"/>
       <arc head="scanError" kind="INPUT" tail="ScanPrintedWallet"/>
@@ -133,18 +139,22 @@
       <arc head="printerErrorAbort" kind="INPUT" tail="PrinterError"/>
       <arc head="Abort" kind="OUTPUT" tail="printerErrorAbort"/>
       <arc head="Abort" kind="OUTPUT" tail="scanTimeout"/>
-      <arc head="PrintWallet" kind="OUTPUT" tail="printAgain"/>
+      <arc head="PrintLoop" kind="OUTPUT" tail="printAgain"/>
       <arc head="Abort" kind="OUTPUT" tail="scanErrorTimeout"/>
-      <arc head="PrintWallet" kind="OUTPUT" tail="tryAgain"/>
       <arc head="printWalletAbort" kind="INPUT" tail="Abort"/>
-      <arc head="tryAgain" kind="INPUT" tail="PrinterError">
-        <point x="18.0" y="17.0"/>
-      </arc>
       <arc head="printWalletSuccess" kind="INPUT" tail="ScanPrintedWallet"/>
       <arc head="printerErrorTimeout" kind="INPUT" tail="PrinterError"/>
       <arc head="scanErrorTimeout" kind="INPUT" tail="PrintWalletScanError"/>
       <arc head="scanTimeout" kind="INPUT" tail="ScanPrintedWallet"/>
       <arc head="scanAbort" kind="INPUT" tail="ScanPrintedWallet"/>
+      <arc head="PrintLoop" kind="OUTPUT" tail="tryAgain"/>
+      <arc head="PrintWallet" kind="OUTPUT" tail="printLoop"/>
+      <arc head="printLoop" kind="INPUT" tail="PrintLoop"/>
+      <arc head="tryAgain" kind="INPUT" tail="PrinterError"/>
+      <arc head="abortLoop" kind="INPUT" tail="PrintLoop"/>
+      <arc broken="true" head="TooManyRetries" kind="OUTPUT" tail="abortLoop"/>
+      <arc head="tooManyRetries" kind="INPUT" tail="TooManyRetries"/>
+      <arc head="Abort" kind="OUTPUT" tail="tooManyRetries"/>
     </edges>
   </gspn>
   <gspn name="AcquireAddress" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
@@ -237,17 +247,20 @@
   </gspn>
   <gspn name="CashInAdditional" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="CashInAdditional" superposition-tags="initial" x="6.0" y="11.0"/>
-      <transition name="cashInBill" nservers-x="0.5" type="EXP" x="10.55" y="11.0"/>
-      <place name="CashInBill" superposition-tags="CashInBill" x="14.0" y="11.0"/>
-      <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="22.55" y="9.0"/>
-      <transition name="cashInBillAbort" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="22.55" y="14.0"/>
-      <transition name="cashInBillMaintenance" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="22.55" y="19.0"/>
-      <transition name="cashInBillReject" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="10.55" y="20.0"/>
-      <transition name="cashInAdditionalSuccess" nservers-x="0.5" type="EXP" x="38.55" y="9.0"/>
-      <transition name="cashInAdditionalMaintenance" nservers-x="0.5" type="EXP" x="38.55" y="19.0"/>
-      <place name="Success" x="30.0" y="9.0"/>
-      <place name="Maintenance" x="30.0" y="19.0"/>
+      <place marking="1" name="CashInAdditional" superposition-tags="initial" x="16.0" y="10.0"/>
+      <transition name="cashInBill" nservers-x="0.5" type="EXP" x="22.55" y="10.0"/>
+      <place name="CashInBill" superposition-tags="CashInBill" x="26.0" y="10.0"/>
+      <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="34.55" y="8.0"/>
+      <transition name="cashInBillAbort" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="34.55" y="13.0"/>
+      <transition name="cashInBillMaintenance" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="34.55" y="18.0"/>
+      <transition name="cashInBillReject" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="22.55" y="19.0"/>
+      <transition name="cashInAdditionalSuccess" nservers-x="0.5" type="EXP" x="50.55" y="8.0"/>
+      <transition name="cashInAdditionalMaintenance" nservers-x="0.5" type="EXP" x="50.55" y="18.0"/>
+      <place name="Success" x="42.0" y="8.0"/>
+      <place name="Maintenance" x="42.0" y="18.0"/>
+      <place name="BillRetry" x="2.0" y="19.0"/>
+      <transition name="abortLoop" nservers-x="0.5" superposition-tags="abort" type="EXP" x="2.55" y="2.0"/>
+      <transition name="retryBill" nservers-x="0.5" superposition-tags="loop_5" type="EXP" x="8.55" y="10.0"/>
     </nodes>
     <edges>
       <arc head="cashInBill" kind="INPUT" tail="CashInAdditional"/>
@@ -260,8 +273,14 @@
       <arc head="cashInAdditionalSuccess" kind="INPUT" tail="Success"/>
       <arc head="cashInAdditionalMaintenance" kind="INPUT" tail="Maintenance"/>
       <arc head="Maintenance" kind="OUTPUT" tail="cashInBillMaintenance"/>
-      <arc head="CashInAdditional" kind="OUTPUT" tail="cashInBillReject"/>
       <arc head="Success" kind="OUTPUT" tail="cashInBillAbort"/>
+      <arc head="BillRetry" kind="OUTPUT" tail="cashInBillReject"/>
+      <arc head="abortLoop" kind="INPUT" tail="BillRetry"/>
+      <arc head="retryBill" kind="INPUT" tail="BillRetry"/>
+      <arc head="CashInAdditional" kind="OUTPUT" tail="retryBill"/>
+      <arc head="Success" kind="OUTPUT" mult-k="1.1145507812500002" tail="abortLoop">
+        <point x="43.0" y="3.0"/>
+      </arc>
     </edges>
   </gspn>
   <gspn name="SendCoins" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
@@ -609,16 +628,16 @@
   </gspn>
   <gspn name="DispenseCash" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="DispenseCash" superposition-tags="initial" x="5.0" y="16.0"/>
-      <transition name="authorizeDispense" nservers-x="0.5" superposition-tags="machine" type="EXP" x="13.55" y="16.0"/>
-      <place name="DispenseBatchAuthorized" x="22.0" y="16.0"/>
-      <transition name="dispenseBatch" nservers-x="0.5" superposition-tags="machine" type="EXP" x="30.55" y="16.0"/>
-      <place name="DispensingBatch" x="38.0" y="16.0"/>
-      <transition name="dispenseSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="45.55" y="16.0"/>
-      <transition name="dispenseCashMaintenance" nservers-x="0.5" superposition-tags="machine" type="EXP" x="38.55" y="10.0"/>
-      <place name="DispensedBatch" x="52.0" y="16.0"/>
-      <transition name="dispenseCashDone" nservers-x="0.5" superposition-tags="machine" type="EXP" x="59.55" y="16.0"/>
-      <transition name="dispenseMore" nservers-x="0.5" type="EXP" x="38.55" y="2.0"/>
+      <place marking="1" name="DispenseCash" superposition-tags="initial" x="5.0" y="18.0"/>
+      <transition name="authorizeDispense" nservers-x="0.5" superposition-tags="machine" type="EXP" x="13.55" y="18.0"/>
+      <place name="DispenseBatchAuthorized" x="22.0" y="18.0"/>
+      <transition name="dispenseBatch" nservers-x="0.5" superposition-tags="machine" type="EXP" x="30.55" y="18.0"/>
+      <place name="DispensingBatch" x="38.0" y="18.0"/>
+      <transition name="dispenseSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="45.55" y="18.0"/>
+      <transition name="dispenseCashMaintenance" nservers-x="0.5" superposition-tags="machine" type="EXP" x="38.55" y="12.0"/>
+      <place name="DispensedBatch" x="52.0" y="18.0"/>
+      <transition name="dispenseCashDone" nservers-x="0.5" superposition-tags="machine" type="EXP" x="59.55" y="18.0"/>
+      <transition name="dispenseMore" nservers-x="0.5" superposition-tags="loop_20" type="EXP" x="38.55" y="4.0"/>
     </nodes>
     <edges>
       <arc head="authorizeDispense" kind="INPUT" tail="DispenseCash"/>
@@ -630,10 +649,10 @@
       <arc head="DispensedBatch" kind="OUTPUT" tail="dispenseSuccess"/>
       <arc head="dispenseCashDone" kind="INPUT" tail="DispensedBatch"/>
       <arc head="dispenseMore" kind="INPUT" mult-k="0.82763671875" tail="DispensedBatch">
-        <point x="53.0" y="3.0"/>
+        <point x="53.0" y="5.0"/>
       </arc>
       <arc head="DispenseBatchAuthorized" kind="OUTPUT" mult-k="1.03271484375" tail="dispenseMore">
-        <point x="23.0" y="3.0"/>
+        <point x="23.0" y="5.0"/>
       </arc>
     </edges>
   </gspn>
@@ -815,6 +834,39 @@
   </gspn>
   <gspn name="AmlKyc" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
+      <place marking="1" name="AmlKyc" superposition-tags="initial" x="20.0" y="15.0"/>
+      <transition name="runAmlKycTier" nservers-x="0.5" superposition-tags="machine" type="EXP" x="33.55" y="15.0"/>
+      <place name="RunTier" superposition-tags="RunTier" x="50.0" y="15.0"/>
+      <transition name="runTierAbort" nservers-x="0.5" superposition-tags="RunTier" type="EXP" x="50.55" y="23.0"/>
+      <transition name="runTierSuccess" nservers-x="0.5" superposition-tags="RunTier" type="EXP" x="33.55" y="29.0"/>
+      <transition name="amlKycAccept" nservers-x="0.5" type="EXP" x="5.55" y="21.0"/>
+      <transition name="noAmlKycTier" nservers-x="0.5" superposition-tags="machine" type="EXP" x="12.55" y="15.0"/>
+      <place name="NoAmlKyc" x="12.0" y="21.0"/>
+      <transition name="amlKycReject" nservers-x="0.5" type="EXP" x="50.55" y="37.0"/>
+      <place name="RejectAmlKyc" x="50.0" y="29.0"/>
+      <place name="TierSuccess" x="20.0" y="29.0"/>
+      <transition name="nextTier" nservers-x="0.5" superposition-tags="loop_10" type="EXP" x="20.55" y="24.0"/>
+      <transition name="loopAbort" nservers-x="0.5" superposition-tags="abort" type="EXP" x="12.55" y="29.0"/>
+    </nodes>
+    <edges>
+      <arc head="RunTier" kind="OUTPUT" tail="runAmlKycTier"/>
+      <arc head="runTierAbort" kind="INPUT" tail="RunTier"/>
+      <arc head="runTierSuccess" kind="INPUT" tail="RunTier"/>
+      <arc head="NoAmlKyc" kind="OUTPUT" tail="noAmlKycTier"/>
+      <arc head="amlKycAccept" kind="INPUT" tail="NoAmlKyc"/>
+      <arc head="RejectAmlKyc" kind="OUTPUT" tail="runTierAbort"/>
+      <arc head="amlKycReject" kind="INPUT" tail="RejectAmlKyc"/>
+      <arc head="noAmlKycTier" kind="INPUT" tail="AmlKyc"/>
+      <arc head="runAmlKycTier" kind="INPUT" tail="AmlKyc"/>
+      <arc head="TierSuccess" kind="OUTPUT" tail="runTierSuccess"/>
+      <arc head="nextTier" kind="INPUT" tail="TierSuccess"/>
+      <arc head="AmlKyc" kind="OUTPUT" tail="nextTier"/>
+      <arc head="loopAbort" kind="INPUT" tail="TierSuccess"/>
+      <arc head="NoAmlKyc" kind="OUTPUT" tail="loopAbort"/>
+    </edges>
+  </gspn>
+  <gspn name="copy of AmlKyc" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
       <place marking="1" name="AmlKyc" superposition-tags="screen, initial" x="5.0" y="15.0"/>
       <transition name="noAmlKycBegin" nservers-x="0.5" superposition-tags="machine" type="EXP" x="5.55" y="9.0"/>
       <transition name="rejectAmlKycBegin" nservers-x="0.5" superposition-tags="user" type="EXP" x="5.55" y="22.0"/>
@@ -823,7 +875,7 @@
       <transition name="runAmlKycTier" nservers-x="0.5" superposition-tags="machine" type="EXP" x="27.55" y="15.0"/>
       <place name="RunTier" superposition-tags="RunTier" x="35.0" y="15.0"/>
       <transition name="runTierAbort" nservers-x="0.5" superposition-tags="RunTier" type="EXP" x="35.55" y="27.0"/>
-      <transition name="runTierSuccess" nservers-x="0.5" superposition-tags="RunTier" type="EXP" x="27.55" y="9.0"/>
+      <transition name="runTierSuccess" nservers-x="0.5" superposition-tags="RunTier" type="EXP" x="35.55" y="8.0"/>
       <transition name="amlKycAccept" nservers-x="0.5" type="EXP" x="12.55" y="4.0"/>
       <transition name="noAmlKycTier" nservers-x="0.5" superposition-tags="machine" type="EXP" x="18.55" y="9.0"/>
       <place name="NoAmlKyc" x="12.0" y="9.0"/>
@@ -855,7 +907,7 @@
       <transition name="sms" nservers-x="0.5" superposition-tags="machine" type="EXP" x="10.55" y="8.0"/>
       <place name="Sms" superposition-tags="Sms" x="16.0" y="8.0"/>
       <transition name="smsSuccess" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="26.55" y="4.0"/>
-      <transition name="smsAbort" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="26.55" y="8.0"/>
+      <transition name="smsAbort" nservers-x="0.5" superposition-tags="Sms" type="EXP" x="26.55" y="9.0"/>
       <transition name="runTierSuccess" nservers-x="0.5" type="EXP" x="53.55" y="13.0"/>
       <transition name="runTierAbort" nservers-x="0.5" type="EXP" x="53.55" y="17.0"/>
       <place name="RunTierSuccess" x="46.0" y="13.0"/>
@@ -894,11 +946,14 @@
       <transition name="smsHasPhoneSuccess" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="59.55" y="36.0"/>
       <transition name="smsHasPhoneRetry" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="46.55" y="45.0"/>
       <transition name="smsHasPhoneBadNumber" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="32.55" y="42.0"/>
-      <place name="SmsRetry" x="4.0" y="45.0"/>
-      <transition name="smsRetry" nservers-x="0.5" type="EXP" x="4.55" y="26.0"/>
+      <place name="SmsRetry" x="3.0" y="45.0"/>
+      <transition name="smsRetry" nservers-x="0.5" superposition-tags="loop_3" type="EXP" x="8.55" y="26.0"/>
       <transition name="smsHasPhoneAbort" nservers-x="0.5" superposition-tags="SmsHasPhone" type="EXP" x="43.55" y="26.0"/>
       <place name="SmsSuccess" x="66.0" y="36.0"/>
       <transition name="smsSuccess" nservers-x="0.5" type="EXP" x="72.55" y="36.0"/>
+      <place name="TooManyRetries" x="3.0" y="10.0"/>
+      <transition name="retryAbort" nservers-x="0.5" type="EXP" x="3.55" y="3.0"/>
+      <transition name="abortLoop" nservers-x="0.5" superposition-tags="abort" type="EXP" x="3.55" y="19.0"/>
     </nodes>
     <edges>
       <arc head="inputPhone" kind="INPUT" tail="Sms"/>
@@ -919,6 +974,10 @@
       <arc head="smsSuccess" kind="INPUT" tail="SmsSuccess"/>
       <arc head="Abort" kind="OUTPUT" tail="smsHasPhoneAbort"/>
       <arc head="Sms" kind="OUTPUT" tail="smsRetry"/>
+      <arc head="retryAbort" kind="INPUT" tail="TooManyRetries"/>
+      <arc head="Abort" kind="OUTPUT" tail="retryAbort"/>
+      <arc head="abortLoop" kind="INPUT" tail="SmsRetry"/>
+      <arc head="TooManyRetries" kind="OUTPUT" tail="abortLoop"/>
     </edges>
   </gspn>
   <gspn name="SmsHasPhone" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
@@ -986,11 +1045,14 @@
       <transition name="inputCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="8.55" y="5.0"/>
       <transition name="timeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="16.55" y="16.0"/>
       <place name="DidReceiveCode" superposition-tags="screen" x="23.0" y="16.0"/>
-      <transition name="receivedCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="16.55" y="9.0"/>
+      <transition name="receivedCode" nservers-x="0.5" superposition-tags="user, loop_3" type="EXP" x="16.55" y="24.0"/>
       <transition name="smsHandleCodeNoCode" nservers-x="0.5" superposition-tags="user" type="EXP" x="31.55" y="16.0"/>
-      <transition name="smsHandleCodeCancel" nservers-x="0.5" superposition-tags="user" type="EXP" x="31.55" y="27.0"/>
+      <transition name="smsHandleCodeCancel" nservers-x="0.5" superposition-tags="user" type="EXP" x="16.55" y="39.0"/>
       <place name="HasCode" superposition-tags="screen" x="31.0" y="5.0"/>
       <transition name="smsHandleCodeSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="46.55" y="5.0"/>
+      <transition name="retryAbort" nservers-x="0.5" superposition-tags="abort" type="EXP" x="23.55" y="31.0"/>
+      <place name="RetryAborted" x="16.0" y="31.0"/>
+      <transition name="cancel" nservers-x="0.5" superposition-tags="user" type="EXP" x="8.55" y="31.0"/>
     </nodes>
     <edges>
       <arc head="inputCode" kind="INPUT" tail="SmsHandleCode"/>
@@ -998,25 +1060,30 @@
       <arc head="DidReceiveCode" kind="OUTPUT" tail="timeout"/>
       <arc head="receivedCode" kind="INPUT" tail="DidReceiveCode"/>
       <arc head="smsHandleCodeNoCode" kind="INPUT" tail="DidReceiveCode"/>
-      <arc head="smsHandleCodeCancel" kind="INPUT" tail="SmsHandleCode"/>
       <arc head="HasCode" kind="OUTPUT" tail="inputCode"/>
       <arc head="SmsHandleCode" kind="OUTPUT" tail="receivedCode"/>
       <arc head="smsHandleCodeSuccess" kind="INPUT" tail="HasCode"/>
+      <arc head="retryAbort" kind="INPUT" tail="DidReceiveCode"/>
+      <arc head="RetryAborted" kind="OUTPUT" tail="retryAbort"/>
+      <arc head="smsHandleCodeCancel" kind="INPUT" tail="RetryAborted"/>
+      <arc head="cancel" kind="INPUT" tail="SmsHandleCode"/>
+      <arc head="RetryAborted" kind="OUTPUT" tail="cancel"/>
     </edges>
   </gspn>
   <gspn name="PhotoCapture" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="PhotoCapture" superposition-tags="screen,initial" x="7.0" y="26.0"/>
+      <place marking="1" name="PhotoCapture" superposition-tags="screen,initial" x="11.0" y="26.0"/>
       <transition name="acceptPhoto" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="26.0"/>
       <transition name="rejectPhoto" nservers-x="0.5" superposition-tags="user" type="EXP" x="11.55" y="18.0"/>
       <place name="CapturingPhoto" superposition-tags="screen" x="24.0" y="26.0"/>
       <transition name="photoCaptureGoodPhoto" nservers-x="0.5" superposition-tags="camera" type="EXP" x="34.55" y="26.0"/>
       <transition label-x="3.0" label-y="0.0" name="badPhoto" nservers-x="0.5" superpos-x="3.0" superpos-y="-1.0" superposition-tags="camera" type="EXP" x="29.55" y="20.0"/>
       <place label-x="3.5" label-y="0.0" name="BadPhoto" superpos-x="3.5" superpos-y="1.0" superposition-tags="screen" x="29.0" y="14.0"/>
-      <transition name="tryAgain" nservers-x="0.5" superposition-tags="user" type="EXP" x="18.55" y="14.0"/>
+      <transition name="tryAgain" nservers-x="0.5" superposition-tags="user,loop_3" type="EXP" x="24.55" y="20.0"/>
       <transition name="cancelPhoto" nservers-x="0.5" superposition-tags="user" type="EXP" x="29.55" y="10.0"/>
       <place label-y="-2.0" name="NoPhoto" x="11.0" y="10.0"/>
       <transition name="photoCaptureNoPhoto" nservers-x="0.5" type="EXP" x="11.55" y="3.0"/>
+      <transition name="abortLoop" nservers-x="0.5" superposition-tags="abort" type="EXP" x="20.55" y="14.0"/>
     </nodes>
     <edges>
       <arc head="acceptPhoto" kind="INPUT" tail="PhotoCapture"/>
@@ -1031,6 +1098,8 @@
       <arc head="NoPhoto" kind="OUTPUT" tail="cancelPhoto"/>
       <arc head="photoCaptureNoPhoto" kind="INPUT" tail="NoPhoto"/>
       <arc head="CapturingPhoto" kind="OUTPUT" tail="tryAgain"/>
+      <arc head="abortLoop" kind="INPUT" tail="BadPhoto"/>
+      <arc head="NoPhoto" kind="OUTPUT" tail="abortLoop"/>
     </edges>
   </gspn>
   <gspn name="SimpleCashIn" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="150">
