@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="ValidatorNets" version="121">
+  <gspn name="ValidatorBill" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
+    <nodes>
+      <place name="ReadingBill" x="21.0" y="8.0"/>
+      <transition name="readBill" nservers-x="0.5" superposition-tags="validator" type="EXP" x="27.55" y="8.0"/>
+      <place name="Escrow" x="34.0" y="8.0"/>
+      <transition name="readingBill" nservers-x="0.5" superposition-tags="validator" type="EXP" x="17.55" y="8.0"/>
+      <transition name="jam" nservers-x="0.5" superposition-tags="validator" type="EXP" x="27.55" y="13.0"/>
+      <transition name="rejected" nservers-x="0.5" superposition-tags="validator" type="EXP" x="27.55" y="18.0"/>
+      <transition name="error" nservers-x="0.5" superposition-tags="validator" type="EXP" x="27.55" y="23.0"/>
+      <transition name="escrowAccept" nservers-x="0.5" superposition-tags="machine" type="EXP" x="39.55" y="8.0"/>
+      <transition name="escrowDeny" nservers-x="0.5" superposition-tags="machine" type="EXP" x="39.55" y="14.0"/>
+      <place name="Stacking" x="45.0" y="8.0"/>
+      <transition name="vendValid" nservers-x="0.5" superposition-tags="validator" type="EXP" x="50.55" y="8.0"/>
+      <place name="EscrowDenying" x="45.0" y="14.0"/>
+      <transition name="escrowRejecting" nservers-x="0.5" superposition-tags="validator" type="EXP" x="50.55" y="14.0"/>
+      <place name="EscrowRejecting" x="56.0" y="14.0"/>
+      <place name="ReadyForBill" x="13.0" y="8.0"/>
+      <transition name="waitBillTimeout" nservers-x="0.5" rotation="6.283185307179586" superposition-tags="timeout_30s,user" type="EXP" x="13.55" y="4.0"/>
+      <transition name="forcedAccept" nservers-x="0.5" superposition-tags="validator" type="EXP" x="39.55" y="3.0"/>
+      <transition name="forcedReject" nservers-x="0.5" superposition-tags="validator" type="EXP" x="34.55" y="22.0"/>
+      <transition name="escrowRejected" nservers-x="0.5" superposition-tags="validator" type="EXP" x="61.55" y="14.0"/>
+      <transition name="runValidatorBill" nservers-x="0.5" superposition-tags="ValidatorDevice" type="EXP" x="4.55" y="8.0"/>
+      <place name="Stacking2" x="55.0" y="8.0"/>
+      <transition name="stacked" nservers-x="0.5" superposition-tags="validator" type="EXP" x="61.55" y="8.0"/>
+      <place name="Completed" x="67.0" y="8.0"/>
+      <transition name="billComplete" nservers-x="0.5" type="EXP" x="74.55" y="8.0"/>
+      <transition name="enabled" nservers-x="0.5" superposition-tags="validator" type="EXP" x="61.55" y="3.0"/>
+      <place name="Rejected" x="67.0" y="14.0"/>
+      <transition name="rejectedBill" nservers-x="0.5" type="EXP" x="73.55" y="14.0"/>
+    </nodes>
+    <edges>
+      <arc head="ReadingBill" kind="OUTPUT" tail="readingBill"/>
+      <arc head="readBill" kind="INPUT" tail="ReadingBill"/>
+      <arc head="jam" kind="INPUT" tail="ReadingBill"/>
+      <arc head="rejected" kind="INPUT" tail="ReadingBill"/>
+      <arc head="error" kind="INPUT" tail="ReadingBill"/>
+      <arc head="Escrow" kind="OUTPUT" tail="readBill"/>
+      <arc head="escrowAccept" kind="INPUT" tail="Escrow"/>
+      <arc head="escrowDeny" kind="INPUT" tail="Escrow"/>
+      <arc head="Stacking" kind="OUTPUT" tail="escrowAccept"/>
+      <arc head="vendValid" kind="INPUT" tail="Stacking"/>
+      <arc head="EscrowDenying" kind="OUTPUT" tail="escrowDeny"/>
+      <arc head="escrowRejecting" kind="INPUT" tail="EscrowDenying"/>
+      <arc head="EscrowRejecting" kind="OUTPUT" tail="escrowRejecting"/>
+      <arc head="readingBill" kind="INPUT" tail="ReadyForBill"/>
+      <arc head="waitBillTimeout" kind="INPUT" tail="ReadyForBill"/>
+      <arc head="forcedAccept" kind="INPUT" tail="Escrow"/>
+      <arc head="Stacking" kind="OUTPUT" tail="forcedAccept"/>
+      <arc head="forcedReject" kind="INPUT" tail="Escrow"/>
+      <arc head="EscrowDenying" kind="OUTPUT" tail="forcedReject"/>
+      <arc head="escrowRejected" kind="INPUT" tail="EscrowRejecting"/>
+      <arc head="ReadyForBill" kind="OUTPUT" tail="runValidatorBill"/>
+      <arc head="Stacking2" kind="OUTPUT" tail="vendValid"/>
+      <arc head="stacked" kind="INPUT" tail="Stacking2"/>
+      <arc head="enabled" kind="INPUT" tail="Stacking2"/>
+      <arc head="Completed" kind="OUTPUT" tail="enabled"/>
+      <arc head="Completed" kind="OUTPUT" tail="stacked"/>
+      <arc head="billComplete" kind="INPUT" tail="Completed"/>
+      <arc head="Rejected" kind="OUTPUT" tail="escrowRejected"/>
+      <arc head="rejectedBill" kind="INPUT" tail="Rejected"/>
+    </edges>
+  </gspn>
+  <gspn name="ValidatorDevice" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place marking="1" name="PowerOn" x="1.0" y="14.0"/>
+      <transition name="initialize" nservers-x="0.5" superposition-tags="machine" type="EXP" x="5.55" y="14.0"/>
+      <place name="Initializing" x="10.0" y="14.0"/>
+      <transition name="initialized" nservers-x="0.5" superposition-tags="validator" type="EXP" x="16.55" y="14.0"/>
+      <place name="Idle" x="20.0" y="14.0"/>
+      <transition name="runValidatorBill" nservers-x="0.5" type="EXP" x="53.55" y="14.0"/>
+      <place name="ValidatingBill" x="60.0" y="14.0"/>
+      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="50.55" y="32.0"/>
+      <transition name="rejectedBill" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="45.55" y="8.0"/>
+      <transition name="error" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="57.55" y="37.0"/>
+      <transition name="waitBillTimeout" nservers-x="0.5" rotation="6.283185307179586" superposition-tags="ValidatorBill" type="EXP" x="40.55" y="3.0"/>
+      <transition name="billComplete" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="52.55" y="18.0"/>
+      <transition name="escrowRejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="45.55" y="26.0"/>
+      <transition name="jam2" nservers-x="0.5" superposition-tags="validator" type="EXP" x="16.55" y="27.0"/>
+      <place name="Jam" x="28.0" y="32.0"/>
+      <place name="ReadyForBill" x="46.0" y="14.0"/>
+      <transition name="senseBill" nservers-x="0.5" type="EXP" x="33.55" y="14.0"/>
+      <transition name="startSession" nservers-x="0.5" superposition-tags="machine" type="EXP" x="24.55" y="14.0"/>
+      <place name="waitReady" x="29.0" y="14.0"/>
+      <transition name="endSession" nservers-x="0.5" superposition-tags="machine" type="EXP" x="40.55" y="8.0"/>
+      <transition name="noSenseBill" nservers-x="0.5" type="EXP" x="31.55" y="8.0"/>
+      <place name="waitIdle" x="35.0" y="8.0"/>
+      <transition name="initialize2" nservers-x="0.5" superposition-tags="machine" type="EXP" x="6.55" y="37.0"/>
+      <place name="ErrorReset" x="28.0" y="37.0"/>
+      <place name="waitForEnable" x="37.0" y="14.0"/>
+      <transition name="readyForBill" nservers-x="0.5" superposition-tags="validator" type="EXP" x="41.55" y="14.0"/>
+      <place name="WaitForDisable" x="25.0" y="8.0"/>
+      <transition name="disabled" nservers-x="0.5" superposition-tags="validator" type="EXP" x="20.55" y="8.0"/>
+    </nodes>
+    <edges>
+      <arc head="initialize" kind="INPUT" tail="PowerOn"/>
+      <arc head="Initializing" kind="OUTPUT" tail="initialize"/>
+      <arc head="initialized" kind="INPUT" tail="Initializing"/>
+      <arc head="Idle" kind="OUTPUT" tail="initialized"/>
+      <arc head="runValidatorBill" kind="INPUT" tail="ReadyForBill"/>
+      <arc head="ValidatingBill" kind="OUTPUT" tail="runValidatorBill"/>
+      <arc head="jam" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="rejectedBill" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="error" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="waitBillTimeout" kind="INPUT" mult-k="0.8438476562500001" tail="ValidatingBill">
+        <point x="58.5" y="5.0"/>
+      </arc>
+      <arc head="billComplete" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="escrowRejected" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="jam2" kind="INPUT" tail="Initializing"/>
+      <arc head="Jam" kind="OUTPUT" tail="jam2"/>
+      <arc head="Jam" kind="OUTPUT" tail="jam"/>
+      <arc head="ReadyForBill" kind="OUTPUT" tail="billComplete"/>
+      <arc head="ReadyForBill" kind="OUTPUT" tail="rejectedBill"/>
+      <arc head="ReadyForBill" kind="OUTPUT" tail="escrowRejected"/>
+      <arc head="startSession" kind="INPUT" tail="Idle"/>
+      <arc head="waitReady" kind="OUTPUT" tail="startSession"/>
+      <arc head="senseBill" kind="INPUT" tail="waitReady"/>
+      <arc head="waitForEnable" kind="OUTPUT" tail="senseBill"/>
+      <arc head="endSession" kind="INPUT" tail="ReadyForBill"/>
+      <arc head="waitIdle" kind="OUTPUT" tail="endSession"/>
+      <arc head="noSenseBill" kind="INPUT" tail="waitIdle"/>
+      <arc head="WaitForDisable" kind="OUTPUT" tail="noSenseBill"/>
+      <arc head="waitIdle" kind="OUTPUT" tail="waitBillTimeout"/>
+      <arc head="ErrorReset" kind="OUTPUT" tail="error"/>
+      <arc head="initialize2" kind="INPUT" tail="ErrorReset"/>
+      <arc head="Initializing" kind="OUTPUT" tail="initialize2"/>
+      <arc head="readyForBill" kind="INPUT" tail="waitForEnable"/>
+      <arc head="ReadyForBill" kind="OUTPUT" tail="readyForBill"/>
+      <arc head="disabled" kind="INPUT" tail="WaitForDisable"/>
+      <arc head="Idle" kind="OUTPUT" tail="disabled"/>
+    </edges>
+  </gspn>
+  <gspn name="ValidatorDeviceFull" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
+    <nodes>
+      <place name="PowerOn" x="7.0" y="5.0"/>
+      <transition name="initialize" nservers-x="0.5" superposition-tags="machine" type="EXP" x="11.55" y="5.0"/>
+      <place name="Initializing" x="16.0" y="5.0"/>
+      <transition name="initialized" nservers-x="0.5" superposition-tags="validator" type="EXP" x="22.55" y="5.0"/>
+      <place name="Idle" x="29.0" y="5.0"/>
+      <transition name="runValidatorBill" nservers-x="0.5" type="EXP" x="36.55" y="5.0"/>
+      <place name="ValidatingBill" x="43.0" y="5.0"/>
+      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="34.55" y="11.0"/>
+      <transition name="rejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="52.55" y="8.0"/>
+      <transition name="error" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="52.55" y="13.0"/>
+      <transition name="waitBillTimeout" nservers-x="0.5" rotation="6.283185307179586" superposition-tags="ValidatorBill" type="EXP" x="47.55" y="16.0"/>
+      <transition name="stacked" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="37.55" y="20.0"/>
+      <transition name="escrowRejected" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="44.55" y="23.0"/>
+      <transition name="jam2" nservers-x="0.5" superposition-tags="validator" type="EXP" x="22.55" y="15.0"/>
+      <place name="Jam" x="29.0" y="15.0"/>
+      <transition name="powerOn" nservers-x="0.5" superposition-tags="validator" type="EXP" x="2.55" y="5.0"/>
+      <place name="LostSignal" x="7.0" y="26.0"/>
+      <transition name="T0" nservers-x="0.5" type="EXP" x="1.55" y="20.0"/>
+      <transition name="T1" nservers-x="0.5" type="EXP" x="4.55" y="20.0"/>
+      <transition name="T3" nservers-x="0.5" type="EXP" x="7.55" y="20.0"/>
+      <transition name="T4" nservers-x="0.5" type="EXP" x="10.55" y="21.0"/>
+      <transition name="T5" nservers-x="0.5" type="EXP" x="13.55" y="24.0"/>
+      <transition name="signalRestoredIdle" nservers-x="0.5" type="EXP" x="16.55" y="30.0"/>
+      <transition name="signalRestoredPowerOn" nservers-x="0.5" type="EXP" x="8.55" y="32.0"/>
+    </nodes>
+    <edges>
+      <arc head="initialize" kind="INPUT" tail="PowerOn"/>
+      <arc head="Initializing" kind="OUTPUT" tail="initialize"/>
+      <arc head="initialized" kind="INPUT" tail="Initializing"/>
+      <arc head="Idle" kind="OUTPUT" tail="initialized"/>
+      <arc head="runValidatorBill" kind="INPUT" tail="Idle"/>
+      <arc head="ValidatingBill" kind="OUTPUT" tail="runValidatorBill"/>
+      <arc head="jam" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="rejected" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="error" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="waitBillTimeout" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="stacked" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="escrowRejected" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="jam2" kind="INPUT" tail="Initializing"/>
+      <arc head="Jam" kind="OUTPUT" tail="jam2"/>
+      <arc head="Jam" kind="OUTPUT" tail="jam"/>
+      <arc head="PowerOn" kind="OUTPUT" tail="powerOn"/>
+      <arc broken="true" head="T0" kind="INPUT" tail="PowerOn"/>
+      <arc broken="true" head="T1" kind="INPUT" tail="Initializing"/>
+      <arc broken="true" head="T3" kind="INPUT" tail="Idle"/>
+      <arc broken="true" head="T4" kind="INPUT" tail="Jam"/>
+      <arc broken="true" head="T5" kind="INPUT" tail="ValidatingBill"/>
+      <arc head="LostSignal" kind="OUTPUT" tail="T0"/>
+      <arc head="LostSignal" kind="OUTPUT" tail="T1"/>
+      <arc head="LostSignal" kind="OUTPUT" tail="T3"/>
+      <arc head="LostSignal" kind="OUTPUT" tail="T4"/>
+      <arc head="LostSignal" kind="OUTPUT" tail="T5"/>
+      <arc head="signalRestoredIdle" kind="INPUT" tail="LostSignal"/>
+      <arc broken="true" head="Idle" kind="OUTPUT" tail="signalRestoredIdle"/>
+      <arc head="signalRestoredPowerOn" kind="INPUT" tail="LostSignal"/>
+      <arc broken="true" head="PowerOn" kind="OUTPUT" mult-k="1.5383789062499997" tail="signalRestoredPowerOn">
+        <point x="9.0" y="37.5"/>
+        <point x="8.0" y="3.5"/>
+      </arc>
+    </edges>
+  </gspn>
+</project>
