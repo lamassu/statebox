@@ -7,7 +7,7 @@
       <transition name="cashIn" nservers-x="0.5" superposition-tags="user" type="EXP" x="27.55" y="13.0"/>
       <transition name="redeem" nservers-x="0.5" superposition-tags="user" type="EXP" x="27.55" y="28.0"/>
       <transition name="changeLanguage" nservers-x="0.5" superposition-tags="user" type="EXP" x="17.55" y="13.0"/>
-      <transition name="changeCoin" nservers-x="0.5" type="EXP" x="8.55" y="13.0"/>
+      <transition name="changeCoin" nservers-x="0.5" superposition-tags="user" type="EXP" x="8.55" y="13.0"/>
       <place name="CashIn" superposition-tags="CashIn" x="36.0" y="13.0"/>
       <place name="CashOut" superposition-tags="CashOut" x="36.0" y="23.0"/>
       <place name="Redeem" superposition-tags="Redeem" x="36.0" y="28.0"/>
@@ -100,11 +100,11 @@
       <transition name="printSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="21.55" y="4.0"/>
       <transition name="printerErrorTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="41.55" y="24.0"/>
       <place label-y="-2.5" name="Abort" x="51.0" y="15.0"/>
-      <transition label-y="-3.0" name="printWalletAbort" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="57.55" y="15.0"/>
+      <transition label-y="-2.5" name="printWalletAbort" nservers-x="0.5" superpos-y="-2.0" type="EXP" x="57.55" y="15.0"/>
       <transition label-x="-0.5" label-y="2.0" name="printError" nservers-x="0.5" superpos-x="-0.5" superpos-y="3.0" superposition-tags="machine" type="EXP" x="21.55" y="21.0"/>
       <place label-y="-2.0" name="ScanPrintedWallet" x="29.0" y="4.0"/>
-      <transition label-y="-3.0" name="printWalletSuccess" nservers-x="0.5" superpos-y="-2.0" superposition-tags="final" type="EXP" x="57.55" y="4.0"/>
-      <transition label-x="3.0" label-y="1.0" name="scanError" nservers-x="0.5" rotation="4.71238898038469" type="EXP" x="29.55" y="8.0"/>
+      <transition label-y="-3.0" name="printWalletSuccess" nservers-x="0.5" superpos-y="-2.0" superposition-tags="machine" type="EXP" x="57.55" y="4.0"/>
+      <transition label-x="3.0" label-y="1.0" name="scanError" nservers-x="0.5" rotation="4.71238898038469" superpos-x="3.0" superpos-y="0.0" superposition-tags="machine" type="EXP" x="29.55" y="8.0"/>
       <place label-x="1.5" label-y="2.0" name="PrintWalletScanError" x="29.0" y="13.0"/>
       <place name="PrinterError" x="29.0" y="21.0"/>
       <transition label-y="-2.0" name="scanAbort" nservers-x="0.5" rotation="-0.0" superposition-tags="user" type="EXP" x="41.55" y="8.0"/>
@@ -213,7 +213,6 @@
       <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="20.55" y="7.0"/>
       <transition name="cashInBillAbort" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="20.55" y="18.0"/>
       <transition name="cashInBillMaintenance" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="20.55" y="13.0"/>
-      <transition name="cashInBillReject" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="20.55" y="24.0"/>
       <transition name="cashInFirstSuccess" nservers-x="0.5" type="EXP" x="36.55" y="7.0"/>
       <transition name="cashInFirstMaintenance" nservers-x="0.5" type="EXP" x="36.55" y="13.0"/>
       <transition name="cashInFirstAbort" nservers-x="0.5" type="EXP" x="36.55" y="18.0"/>
@@ -231,36 +230,29 @@
       <arc head="cashInBillMaintenance" kind="INPUT" mult-k="1.21201171875" tail="CashInBill">
         <point x="17.0" y="14.0"/>
       </arc>
-      <arc head="cashInBillReject" kind="INPUT" mult-k="0.9006835937500001" tail="CashInBill">
-        <point x="13.5" y="25.0"/>
-      </arc>
       <arc head="Success" kind="OUTPUT" tail="cashInBillSuccess"/>
       <arc head="cashInFirstSuccess" kind="INPUT" tail="Success"/>
       <arc head="cashInFirstMaintenance" kind="INPUT" tail="Maintenance"/>
       <arc head="Maintenance" kind="OUTPUT" tail="cashInBillMaintenance"/>
       <arc head="Abort" kind="OUTPUT" tail="cashInBillAbort"/>
-      <arc head="Abort" kind="OUTPUT" mult-k="0.92978515625" tail="cashInBillReject">
-        <point x="29.0" y="25.0"/>
-      </arc>
       <arc head="cashInFirstAbort" kind="INPUT" tail="Abort"/>
     </edges>
   </gspn>
   <gspn name="CashInAdditional" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false">
     <nodes>
-      <place marking="1" name="CashInAdditional" superposition-tags="initial" x="16.0" y="10.0"/>
-      <transition name="cashInBill" nservers-x="0.5" type="EXP" x="22.55" y="10.0"/>
-      <place name="CashInBill" superposition-tags="CashInBill" x="26.0" y="10.0"/>
-      <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="34.55" y="8.0"/>
-      <transition name="cashInBillAbort" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="34.55" y="13.0"/>
-      <transition name="cashInBillMaintenance" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="34.55" y="18.0"/>
-      <transition name="cashInBillReject" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="22.55" y="19.0"/>
-      <transition name="cashInAdditionalSuccess" nservers-x="0.5" type="EXP" x="50.55" y="8.0"/>
-      <transition name="cashInAdditionalMaintenance" nservers-x="0.5" type="EXP" x="50.55" y="18.0"/>
-      <place name="Success" x="42.0" y="8.0"/>
-      <place name="Maintenance" x="42.0" y="18.0"/>
-      <place name="BillRetry" x="2.0" y="19.0"/>
-      <transition name="abortLoop" nservers-x="0.5" superposition-tags="abort" type="EXP" x="2.55" y="2.0"/>
-      <transition name="retryBill" nservers-x="0.5" superposition-tags="loop_5" type="EXP" x="8.55" y="10.0"/>
+      <place marking="1" name="CashInAdditional" superposition-tags="initial" x="17.0" y="12.0"/>
+      <transition name="cashInBill" nservers-x="0.5" type="EXP" x="23.55" y="12.0"/>
+      <place name="CashInBill" superposition-tags="CashInBill" x="27.0" y="12.0"/>
+      <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="35.55" y="10.0"/>
+      <transition name="cashInBillAbort" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="35.55" y="15.0"/>
+      <transition name="cashInBillMaintenance" nservers-x="0.5" superposition-tags="CashInBill" type="EXP" x="35.55" y="20.0"/>
+      <transition name="cashInAdditionalSuccess" nservers-x="0.5" type="EXP" x="51.55" y="10.0"/>
+      <transition name="cashInAdditionalMaintenance" nservers-x="0.5" type="EXP" x="51.55" y="20.0"/>
+      <place name="Success" x="43.0" y="10.0"/>
+      <place name="Maintenance" x="43.0" y="20.0"/>
+      <place name="BillRetry" x="3.0" y="21.0"/>
+      <transition name="abortLoop" nservers-x="0.5" superposition-tags="abort" type="EXP" x="3.55" y="4.0"/>
+      <transition name="retryBill" nservers-x="0.5" superposition-tags="loop_5" type="EXP" x="9.55" y="12.0"/>
     </nodes>
     <edges>
       <arc head="cashInBill" kind="INPUT" tail="CashInAdditional"/>
@@ -268,18 +260,16 @@
       <arc head="cashInBillSuccess" kind="INPUT" tail="CashInBill"/>
       <arc head="cashInBillAbort" kind="INPUT" tail="CashInBill"/>
       <arc head="cashInBillMaintenance" kind="INPUT" tail="CashInBill"/>
-      <arc head="cashInBillReject" kind="INPUT" tail="CashInBill"/>
       <arc head="Success" kind="OUTPUT" tail="cashInBillSuccess"/>
       <arc head="cashInAdditionalSuccess" kind="INPUT" tail="Success"/>
       <arc head="cashInAdditionalMaintenance" kind="INPUT" tail="Maintenance"/>
       <arc head="Maintenance" kind="OUTPUT" tail="cashInBillMaintenance"/>
       <arc head="Success" kind="OUTPUT" tail="cashInBillAbort"/>
-      <arc head="BillRetry" kind="OUTPUT" tail="cashInBillReject"/>
       <arc head="abortLoop" kind="INPUT" tail="BillRetry"/>
       <arc head="retryBill" kind="INPUT" tail="BillRetry"/>
       <arc head="CashInAdditional" kind="OUTPUT" tail="retryBill"/>
       <arc head="Success" kind="OUTPUT" mult-k="1.1145507812500002" tail="abortLoop">
-        <point x="43.0" y="3.0"/>
+        <point x="44.0" y="5.0"/>
       </arc>
     </edges>
   </gspn>
@@ -311,40 +301,43 @@
   </gspn>
   <gspn name="CashInBill" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
     <nodes>
-      <place label-y="3.5" marking="1" name="CashInBill" superposition-tags="initial" x="4.0" y="20.0"/>
-      <transition name="cashInBillTimeout" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="10.55" y="11.0"/>
-      <transition label-y="-2.5" name="vendValid" nservers-x="0.5" superpos-y="-3.5" superposition-tags="ValidatorBill" type="EXP" x="48.55" y="20.0"/>
-      <transition name="reject" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="4.55" y="31.0"/>
-      <transition name="jam" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="27.55" y="6.0"/>
-      <transition name="readBill" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="18.55" y="20.0"/>
-      <place name="CheckAmount" x="26.0" y="20.0"/>
-      <transition name="escrowAccept" nservers-x="0.5" superposition-tags="machine" type="EXP" x="33.55" y="20.0"/>
-      <place name="Stacking" x="41.0" y="20.0"/>
-      <transition name="escrowDeny" nservers-x="0.5" superposition-tags="machine" type="EXP" x="26.55" y="28.0"/>
-      <place name="EscrowDenying" x="26.0" y="33.0"/>
-      <transition name="rejectedBill" nservers-x="0.5" superposition-tags="ValidatorBill" type="EXP" x="26.55" y="39.0"/>
-      <place name="InformLowBalance" x="48.0" y="66.0"/>
-      <transition name="lowBalance" nservers-x="0.5" superposition-tags="machine" type="EXP" x="48.55" y="39.0"/>
-      <transition name="needAmlKyc" nservers-x="0.5" superposition-tags="machine" type="EXP" x="41.55" y="39.0"/>
-      <transition name="lowBalanceOk" nservers-x="0.5" superposition-tags="user" type="EXP" x="43.55" y="66.0"/>
-      <place name="AmlKyc" x="41.0" y="52.0"/>
-      <transition name="amlKycAccept" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="41.55" y="59.0"/>
-      <transition name="amlKycReject" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="27.55" y="52.0"/>
-      <transition name="escrowReject" nservers-x="0.5" type="EXP" x="13.55" y="45.0"/>
-      <place name="RejectComplete" x="13.0" y="66.0"/>
-      <place name="EscrowRejected" x="13.0" y="39.0"/>
-      <place name="ChooseDenyReason" x="41.0" y="28.0"/>
-      <transition name="cashInBillDone" nservers-x="0.5" superposition-tags="user" type="EXP" x="4.55" y="3.0"/>
-      <place name="Stacking2" x="53.0" y="20.0"/>
-      <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="Validator" type="EXP" x="58.55" y="20.0"/>
-      <transition name="stackingJam" nservers-x="0.5" type="EXP" x="41.55" y="11.0"/>
-      <transition name="stacking2Jam" nservers-x="0.5" type="EXP" x="53.55" y="11.0"/>
-      <place name="Maintenance" x="46.0" y="6.0"/>
-      <transition name="cashInBillMaintenance" nservers-x="0.5" type="EXP" x="46.55" y="3.0"/>
-      <place name="Reject" x="4.0" y="45.0"/>
-      <transition name="cashInBillReject" nservers-x="0.5" type="EXP" x="4.55" y="58.0"/>
-      <place name="Abort" x="10.0" y="3.0"/>
-      <transition name="cashInBillAbort" nservers-x="0.5" type="EXP" x="14.55" y="3.0"/>
+      <place label-y="3.5" marking="1" name="CashInBill" superposition-tags="initial" x="30.0" y="24.0"/>
+      <transition name="cashInBillTimeout" nservers-x="0.5" superposition-tags="timeout_30s" type="EXP" x="38.55" y="15.0"/>
+      <transition label-y="-2.5" name="vendValid" nservers-x="0.5" superpos-y="-3.5" superposition-tags="machine" type="EXP" x="74.55" y="24.0"/>
+      <transition name="reject" nservers-x="0.5" superposition-tags="machine" type="EXP" x="30.55" y="35.0"/>
+      <transition name="jam" nservers-x="0.5" superposition-tags="machine" type="EXP" x="53.55" y="10.0"/>
+      <transition name="readBill" nservers-x="0.5" superposition-tags="machine" type="EXP" x="44.55" y="24.0"/>
+      <place name="CheckAmount" x="52.0" y="24.0"/>
+      <transition name="escrowAccept" nservers-x="0.5" superposition-tags="machine" type="EXP" x="59.55" y="24.0"/>
+      <place name="Stacking" x="67.0" y="24.0"/>
+      <transition name="escrowDeny" nservers-x="0.5" superposition-tags="machine" type="EXP" x="52.55" y="32.0"/>
+      <place name="EscrowDenying" x="52.0" y="37.0"/>
+      <transition name="rejectedBill" nservers-x="0.5" superposition-tags="machine" type="EXP" x="52.55" y="43.0"/>
+      <place name="InformLowBalance" x="74.0" y="70.0"/>
+      <transition name="lowBalance" nservers-x="0.5" superposition-tags="machine" type="EXP" x="74.55" y="43.0"/>
+      <transition name="needAmlKyc" nservers-x="0.5" superposition-tags="machine" type="EXP" x="67.55" y="43.0"/>
+      <transition name="lowBalanceOk" nservers-x="0.5" superposition-tags="user" type="EXP" x="69.55" y="70.0"/>
+      <place name="AmlKyc" superposition-tags="AmlKyc" x="67.0" y="56.0"/>
+      <transition name="amlKycAccept" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="67.55" y="63.0"/>
+      <transition name="amlKycReject" nservers-x="0.5" superposition-tags="AmlKyc" type="EXP" x="53.55" y="56.0"/>
+      <transition name="escrowReject" nservers-x="0.5" type="EXP" x="39.55" y="49.0"/>
+      <place name="RejectComplete" x="39.0" y="70.0"/>
+      <place name="EscrowRejected" x="39.0" y="43.0"/>
+      <place name="ChooseDenyReason" x="67.0" y="32.0"/>
+      <transition name="cashInBillDone" nservers-x="0.5" superposition-tags="user" type="EXP" x="30.55" y="15.0"/>
+      <place name="Stacked" x="79.0" y="24.0"/>
+      <transition name="cashInBillSuccess" nservers-x="0.5" superposition-tags="machine" type="EXP" x="84.55" y="24.0"/>
+      <transition name="stackingJam" nservers-x="0.5" superposition-tags="machine" type="EXP" x="67.55" y="15.0"/>
+      <transition name="stackedJam" nservers-x="0.5" superposition-tags="machine" type="EXP" x="79.55" y="15.0"/>
+      <place name="Maintenance" x="72.0" y="10.0"/>
+      <transition name="cashInBillMaintenance" nservers-x="0.5" type="EXP" x="72.55" y="7.0"/>
+      <place name="Reject" x="30.0" y="49.0"/>
+      <transition name="insertAgain" nservers-x="0.5" superposition-tags="loop_10" type="EXP" x="22.55" y="24.0"/>
+      <place name="Abort" x="30.0" y="6.0"/>
+      <transition name="cashInBillAbort" nservers-x="0.5" type="EXP" x="40.55" y="6.0"/>
+      <transition name="loopAbort" nservers-x="0.5" superposition-tags="abort" type="EXP" x="16.55" y="24.0"/>
+      <place name="TooManyRejections" x="16.0" y="6.0"/>
+      <transition name="okTooManyRejections" nservers-x="0.5" superposition-tags="user,timeout_30s" type="EXP" x="23.55" y="6.0"/>
     </nodes>
     <edges>
       <arc head="cashInBillTimeout" kind="INPUT" tail="CashInBill"/>
@@ -371,22 +364,27 @@
       <arc head="EscrowDenying" kind="OUTPUT" tail="escrowDeny"/>
       <arc head="CheckAmount" kind="OUTPUT" tail="readBill"/>
       <arc head="cashInBillDone" kind="INPUT" tail="CashInBill"/>
-      <arc head="Stacking2" kind="OUTPUT" tail="vendValid"/>
-      <arc head="cashInBillSuccess" kind="INPUT" tail="Stacking2"/>
+      <arc head="Stacked" kind="OUTPUT" tail="vendValid"/>
+      <arc head="cashInBillSuccess" kind="INPUT" tail="Stacked"/>
       <arc head="stackingJam" kind="INPUT" tail="Stacking"/>
-      <arc head="stacking2Jam" kind="INPUT" tail="Stacking2"/>
+      <arc head="stackedJam" kind="INPUT" tail="Stacked"/>
       <arc head="jam" kind="INPUT" tail="CashInBill"/>
       <arc head="AmlKyc" kind="OUTPUT" tail="needAmlKyc"/>
       <arc head="Maintenance" kind="OUTPUT" tail="stackingJam"/>
-      <arc head="Maintenance" kind="OUTPUT" tail="stacking2Jam"/>
+      <arc head="Maintenance" kind="OUTPUT" tail="stackedJam"/>
       <arc head="Maintenance" kind="OUTPUT" tail="jam"/>
       <arc head="cashInBillMaintenance" kind="INPUT" tail="Maintenance"/>
       <arc head="Reject" kind="OUTPUT" tail="reject"/>
       <arc head="Reject" kind="OUTPUT" tail="escrowReject"/>
-      <arc head="cashInBillReject" kind="INPUT" tail="Reject"/>
+      <arc head="insertAgain" kind="INPUT" tail="Reject"/>
       <arc head="Abort" kind="OUTPUT" tail="cashInBillDone"/>
       <arc head="Abort" kind="OUTPUT" tail="cashInBillTimeout"/>
       <arc head="cashInBillAbort" kind="INPUT" tail="Abort"/>
+      <arc head="CashInBill" kind="OUTPUT" tail="insertAgain"/>
+      <arc head="loopAbort" kind="INPUT" tail="Reject"/>
+      <arc head="TooManyRejections" kind="OUTPUT" tail="loopAbort"/>
+      <arc head="okTooManyRejections" kind="INPUT" tail="TooManyRejections"/>
+      <arc head="Abort" kind="OUTPUT" tail="okTooManyRejections"/>
     </edges>
   </gspn>
   <gspn name="ValidatorBill" show-color-cmd="false" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="75">
